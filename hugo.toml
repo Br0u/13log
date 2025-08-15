@@ -1,4 +1,4 @@
-baseURL = "https://Br0u.github.io/"   # 部署到 GitHub Pages 用户主页时这么写
+baseURL = "https://www.13log.live/"
 title = "13log"
 # 若用 Submodule 安装主题：
 theme = "hugo-PaperMod"
