@@ -1,0 +1,24 @@
+baseURL = "https://Br0u.github.io/"   # 部署到 GitHub Pages 用户主页时这么写
+title = "13log"
+# 若用 Submodule 安装主题：
+theme = "hugo-PaperMod"
+
+enableRobotsTXT = true
+enableEmoji = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]          # PaperMod 搜索需要 JSON
+
+[pagination]
+  pagerSize = 10                           # 新版键名（替代 paginate）
+                                           # Hugo 0.128+ 要用这个键
+
+[params]
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowToc = true
+  ShowCodeCopyButtons = true
+
+  [params.homeInfoParams]                  # 首页卡片模式（二选一，另一个是 profileMode）
+    Title = "花似伊，柳似伊"
+    Content = ""
