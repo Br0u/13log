@@ -5,6 +5,7 @@ title = '{{ replace .File.ContentBaseName "-" " " | title }}'
 tags = []
 categories = []
 description = ""
+readingTime = 1
 
 [cover]
 image = ""          # 例如：/images/covers/demo.jpg
