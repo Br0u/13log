@@ -1,0 +1,10 @@
+{{ if eq (.Get "type") "podcast" }}
+<a href="{{ .Get "link" }}" target="_blank" title="{{ .Get "title" }}" style="display: inline-block; width: calc(25% - 1rem); margin: 0.5rem; padding: 0.5rem; background-color: var(--entry); border: 1px solid var(--border); border-radius: 0.5rem; text-decoration: none; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+    <img src="{{ .Get "image" }}" style="width: 100%; height: 8rem; object-fit: cover; border-radius: 0.25rem;" alt="{{ .Get "title" }}">
+    <div style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--content);">{{ .Get "title" }}</div>
+</a>
+{{ else }}
+<a href="{{ .Get "link" }}" target="_blank" style="display: inline-block; width: calc(50% - 1rem); margin: 0.5rem; padding: 1rem 1.5rem; background-color: var(--entry); border: 1px solid var(--border); border-radius: 0.5rem; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+    <h3 style="margin: 0; font-size: 1.125rem; font-weight: 500; color: var(--content);">{{ .Get "title" }}</h3>
+</a>
+{{ end }}
