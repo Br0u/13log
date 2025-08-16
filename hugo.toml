@@ -18,6 +18,7 @@ enableEmoji = true
   ShowReadingTime = true
   ShowToc = true
   ShowCodeCopyButtons = true
+  readingTime = 300  # 每分钟300字（中文标准）
 
 [markup]
   [markup.goldmark]
