@@ -1,0 +1,12 @@
+/* 调整头像大小（默认 ~120px，可按需调） */
+.profile .avatar {
+    width: 240px;
+    height: 240px;
+  }
+  
+  /* 可选：加一点边框/阴影 */
+  .profile .avatar {
+    border: 2px solid var(--tertiary);
+    box-shadow: 0 6px 16px rgba(0,0,0,.08);
+  }
+  

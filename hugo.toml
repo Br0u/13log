@@ -19,6 +19,20 @@ enableEmoji = true
   ShowToc = true
   ShowCodeCopyButtons = true
 
-  [params.homeInfoParams]                  # 首页卡片模式（二选一，另一个是 profileMode）
-    Title = "花似伊，柳似伊"
-    Content = ""
+    [params.profileMode]
+    enabled = true
+    title = "花似伊，柳似伊"
+    imageUrl = "/images/avatar.jpg"
+    imageTitle = "Avatar"
+    subtitle = "Coding • Books • Life"
+        [[params.profileMode.buttons]]
+        name = "Posts"
+        url  = "/posts/"
+
+        [[params.profileMode.buttons]]
+        name = "Archive"
+        url  = "/archives/"
+
+        #[[params.socialIcons]]
+        #name = "github"
+        #url  = "https://github.com/Br0u"
