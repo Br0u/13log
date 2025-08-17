@@ -8,6 +8,19 @@ aliases:
   - /blogroll/
 ---
 
+# 竹色溪下绿，荷花镜里香。
+
+![Aboutme](/images/aboutme.png)
+
+## 关于我 Aboutme
+
+- 喜欢胡思乱想
+- 双鱼座/INFJ
+- 拥有零个作品的作家
+- 不会写代码的 Coder
+
+---
+
 「林卷」是 Linkroll 的半音译，受到了 [Hsins](https://hsins.me/) 的启发，他把 Blogroll 译作「波卷」。这个页面收录我常看的链接，包括一些博客、播客和有意思的网站，由于内容不限于博客，所以取名 Linkroll。
 
 ## 我常读的中文博客
