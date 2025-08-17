@@ -10,7 +10,7 @@ aliases:
 
 # 竹色溪下绿，荷花镜里香。
 
-![Aboutme](/images/aboutme.png)
+![Aboutme](/static/images/aboutme.png)
 
 ## 关于我 Aboutme
 
