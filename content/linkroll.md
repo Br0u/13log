@@ -10,12 +10,11 @@ aliases:
 
 # 竹色溪下绿，荷花镜里香。
 
-![Aboutme](/static/images/aboutme.png)
+![Aboutme](/images/aboutme.png)
 
 ## 关于我 Aboutme
 
 - 喜欢胡思乱想
-- 双鱼座/INFJ
 - 拥有零个作品的作家
 - 不会写代码的 Coder
 
