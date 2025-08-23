@@ -12,18 +12,20 @@
 
 /* ===== 字体自定义样式 ===== */
 
-/* 文章内容字体优化 - 只针对文章内容，不影响主题UI */
+/* 文章内容字体优化 - 使用宋体，优化中文阅读体验 */
 .post-content,
 .entry-content,
 .post-single .post-content,
 .single .entry-content {
-  font-size: 19px; /* 增大文章字体 */
+  font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+    "KaiTi", "楷体", serif;
+  font-size: 22px; /* 调大文章字体，从19px改为22px */
   line-height: 1.8; /* 舒适的行高 */
   font-weight: 400;
   color: var(--content);
 }
 
-/* 文章内容中的标题字体 */
+/* 文章内容中的标题字体 - 使用宋体 */
 .post-content h1,
 .post-content h2,
 .post-content h3,
@@ -36,8 +38,8 @@
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-  font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "Georgia", serif;
+  font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+    "KaiTi", "楷体", serif;
   font-weight: 600;
   color: var(--content);
   margin-top: 2rem;
@@ -46,19 +48,19 @@
 
 .post-content h1,
 .entry-content h1 {
-  font-size: 2.2rem;
+  font-size: 2.6rem; /* 调大标题，从2.2rem改为2.6rem */
   line-height: 1.3;
 }
 
 .post-content h2,
 .entry-content h2 {
-  font-size: 1.8rem;
+  font-size: 2.2rem; /* 调大标题，从1.8rem改为2.2rem */
   line-height: 1.4;
 }
 
 .post-content h3,
 .entry-content h3 {
-  font-size: 1.5rem;
+  font-size: 1.8rem; /* 调大标题，从1.5rem改为1.8rem */
   line-height: 1.4;
 }
 
@@ -68,7 +70,7 @@
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-  font-size: 1.3rem;
+  font-size: 1.5rem; /* 调大标题，从1.3rem改为1.5rem */
   line-height: 1.4;
 }
 
@@ -85,7 +87,9 @@
 .post-content ol,
 .entry-content ul,
 .entry-content ol {
-  font-size: 18px;
+  font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+    "KaiTi", "楷体", serif;
+  font-size: 21px; /* 调大列表字体，从18px改为21px */
   line-height: 1.8;
   margin-bottom: 1.5rem;
   padding-left: 2rem;
@@ -111,16 +115,17 @@
 .entry-content pre {
   font-family: "JetBrains Mono", "Fira Code", "Consolas", "Monaco",
     "Courier New", monospace;
-  font-size: 15px;
+  font-size: 16px; /* 调大代码字体，从15px改为16px */
   line-height: 1.6;
 }
 
-/* 文章内容中的引用块 */
+/* 文章内容中的引用块 - 使用宋体 */
 .post-content blockquote,
 .entry-content blockquote {
-  font-family: "Noto Serif SC", "Georgia", serif;
+  font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+    "KaiTi", "楷体", serif;
   font-style: italic;
-  font-size: 17px;
+  font-size: 20px; /* 调大引用字体，从17px改为20px */
   line-height: 1.7;
   padding: 1.5rem 2rem;
   margin: 2rem 0;
@@ -159,7 +164,9 @@
 /* 文章内容中的表格 */
 .post-content table,
 .entry-content table {
-  font-size: 16px;
+  font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+    "KaiTi", "楷体", serif;
+  font-size: 19px; /* 调大表格字体，从16px改为19px */
   line-height: 1.6;
   border-collapse: collapse;
   width: 100%;
@@ -199,21 +206,21 @@
 @media (max-width: 768px) {
   .post-content,
   .entry-content {
-    font-size: 17px;
+    font-size: 20px; /* 调大移动端字体，从17px改为20px */
   }
 
   .post-content h1,
   .entry-content h1 {
-    font-size: 1.8rem;
+    font-size: 2.2rem; /* 调大移动端标题，从1.8rem改为2.2rem */
   }
 
   .post-content h2,
   .entry-content h2 {
-    font-size: 1.6rem;
+    font-size: 1.9rem; /* 调大移动端标题，从1.6rem改为1.9rem */
   }
 
   .post-content h3,
   .entry-content h3 {
-    font-size: 1.4rem;
+    font-size: 1.6rem; /* 调大移动端标题，从1.4rem改为1.6rem */
   }
 }

@@ -44,9 +44,9 @@ enableEmoji = true
         name = "Posts"
         url  = "/posts/"
 
-        [[params.profileMode.buttons]]
-        name = "Archive"
-        url  = "/archives/"
+        # [[params.profileMode.buttons]]
+        # name = "Archive"
+        # url  = "/archives/"
 
         [[params.profileMode.buttons]]
         name = "Linkroll"
