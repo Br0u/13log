@@ -208,23 +208,111 @@
 
 /* 响应式字体大小 - 只针对文章内容 */
 @media (max-width: 768px) {
+  /* 移动端强制应用宋体 */
   .post-content,
-  .entry-content {
-    font-size: 19px; /* 移动端字体稍小 */
+  .entry-content,
+  .post-content p,
+  .entry-content p,
+  .post-content div,
+  .entry-content div {
+    font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+      "KaiTi", "楷体", serif !important;
+    font-size: 19px !important; /* 移动端字体稍小 */
+    line-height: 1.8;
+  }
+
+  /* 移动端标题字体 */
+  .post-content h1,
+  .entry-content h1,
+  .post-content h2,
+  .entry-content h2,
+  .post-content h3,
+  .entry-content h3,
+  .post-content h4,
+  .entry-content h4,
+  .post-content h5,
+  .entry-content h5,
+  .post-content h6,
+  .entry-content h6 {
+    font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+      "KaiTi", "楷体", serif !important;
   }
 
   .post-content h1,
   .entry-content h1 {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
 
   .post-content h2,
   .entry-content h2 {
-    font-size: 1.8rem;
+    font-size: 1.8rem !important;
   }
 
   .post-content h3,
   .entry-content h3 {
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
   }
+
+  /* 移动端列表字体 */
+  .post-content ul,
+  .entry-content ul,
+  .post-content ol,
+  .entry-content ol {
+    font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+      "KaiTi", "楷体", serif !important;
+    font-size: 18px !important;
+  }
+
+  /* 移动端引用块字体 */
+  .post-content blockquote,
+  .entry-content blockquote {
+    font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+      "KaiTi", "楷体", serif !important;
+    font-size: 18px !important;
+  }
+
+  /* 移动端表格字体 */
+  .post-content table,
+  .entry-content table {
+    font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+      "KaiTi", "楷体", serif !important;
+    font-size: 17px !important;
+  }
+}
+
+/* 超小屏幕设备适配 */
+@media (max-width: 480px) {
+  .post-content,
+  .entry-content {
+    font-size: 18px !important;
+    line-height: 1.7;
+  }
+
+  .post-content h1,
+  .entry-content h1 {
+    font-size: 1.8rem !important;
+  }
+
+  .post-content h2,
+  .entry-content h2 {
+    font-size: 1.6rem !important;
+  }
+
+  .post-content h3,
+  .entry-content h3 {
+    font-size: 1.4rem !important;
+  }
+}
+
+/* 强制字体应用 - 解决移动端字体回退问题 */
+.post-content *,
+.entry-content * {
+  font-family: inherit;
+}
+
+/* 确保所有文本元素都继承宋体 */
+.post-content,
+.entry-content {
+  font-family: "SimSun", "宋体", "STSong", "华文宋体", "FangSong", "仿宋",
+    "KaiTi", "楷体", serif !important;
 }
