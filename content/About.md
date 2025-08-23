@@ -1,6 +1,6 @@
 ---
-title: ""
-date:
+title: "About"
+date: 2024-03-15T02:30:00-04:00
 draft: false
 aliases:
   - /cards/links/
