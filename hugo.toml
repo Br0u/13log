@@ -10,7 +10,7 @@ enableEmoji = true
   home = ["HTML", "RSS", "JSON"]          # PaperMod 搜索需要 JSON
 
 [pagination]
-  pagerSize = 10                           # 新版键名（替代 paginate）
+  pagerSize = 30                           # 新版键名（替代 paginate）
                                            # Hugo 0.128+ 要用这个键
 
 [params]
