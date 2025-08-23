@@ -49,8 +49,8 @@ enableEmoji = true
         # url  = "/archives/"
 
         [[params.profileMode.buttons]]
-        name = "Linkroll"
-        url  = "/linkroll/"
+        name = "About"
+        url  = "/About/"
 
         #[[params.socialIcons]]
         #name = "github"
