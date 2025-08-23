@@ -12,110 +12,112 @@
 
 /* ===== 字体自定义样式 ===== */
 
-/* 全局字体设置 - 优化阅读体验 */
-body {
-  font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
-  font-size: 18px; /* 增大基础字体，提升可读性 */
-  line-height: 1.75; /* 优化行高，减少视觉疲劳 */
-  font-weight: 400;
-  letter-spacing: 0.01em; /* 轻微增加字间距 */
-}
-
-/* 标题字体设置 - 层次分明 */
-h1 {
-  font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "Georgia", serif;
-  font-size: 2.5rem; /* 32px */
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 1.5rem;
-  color: var(--content);
-}
-
-h2 {
-  font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "Georgia", serif;
-  font-size: 2rem; /* 28px */
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 1.25rem;
-  color: var(--content);
-}
-
-h3 {
-  font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "Georgia", serif;
-  font-size: 1.5rem; /* 24px */
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 1rem;
-  color: var(--content);
-}
-
-h4,
-h5,
-h6 {
-  font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", "Georgia", serif;
-  font-size: 1.25rem; /* 20px */
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 0.75rem;
-  color: var(--content);
-}
-
-/* 文章内容字体 - 优化长文本阅读 */
+/* 文章内容字体优化 - 只针对文章内容，不影响主题UI */
 .post-content,
-.entry-content {
+.entry-content,
+.post-single .post-content,
+.single .entry-content {
   font-size: 19px; /* 增大文章字体 */
   line-height: 1.8; /* 舒适的行高 */
   font-weight: 400;
   color: var(--content);
 }
 
-/* 段落间距优化 */
+/* 文章内容中的标题字体 */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6,
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6 {
+  font-family: "Noto Serif SC", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Georgia", serif;
+  font-weight: 600;
+  color: var(--content);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.post-content h1,
+.entry-content h1 {
+  font-size: 2.2rem;
+  line-height: 1.3;
+}
+
+.post-content h2,
+.entry-content h2 {
+  font-size: 1.8rem;
+  line-height: 1.4;
+}
+
+.post-content h3,
+.entry-content h3 {
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.post-content h4,
+.post-content h5,
+.post-content h6,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6 {
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+/* 文章内容中的段落 */
 .post-content p,
 .entry-content p {
   margin-bottom: 1.5rem;
-  text-align: justify; /* 两端对齐，更整齐 */
+  text-align: justify;
   text-justify: inter-word;
 }
 
-/* 导航菜单字体 */
-.nav {
-  font-family: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB",
-    "Microsoft YaHei", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
+/* 文章内容中的列表 */
+.post-content ul,
+.post-content ol,
+.entry-content ul,
+.entry-content ol {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
 }
 
-/* 侧边栏字体 */
-.sidebar {
-  font-size: 15px;
-  line-height: 1.6;
+.post-content li,
+.entry-content li {
+  margin-bottom: 0.5rem;
 }
 
-/* 代码块字体 - 编程友好 */
-code,
-pre {
+/* 文章内容中的代码 */
+.post-content code:not(pre code),
+.entry-content code:not(pre code) {
   font-family: "JetBrains Mono", "Fira Code", "Consolas", "Monaco",
     "Courier New", monospace;
-  font-size: 15px; /* 增大代码字体 */
-  line-height: 1.6;
-  font-weight: 400;
-}
-
-/* 行内代码 */
-code:not(pre code) {
   font-size: 0.9em;
   padding: 0.2em 0.4em;
   background-color: var(--code-bg);
   border-radius: 3px;
 }
 
-/* 引用块字体 - 优雅的引用样式 */
-blockquote {
+.post-content pre,
+.entry-content pre {
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", "Monaco",
+    "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* 文章内容中的引用块 */
+.post-content blockquote,
+.entry-content blockquote {
   font-family: "Noto Serif SC", "Georgia", serif;
   font-style: italic;
   font-size: 17px;
@@ -127,44 +129,36 @@ blockquote {
   border-radius: 0 8px 8px 0;
 }
 
-/* 列表样式优化 */
-.post-content ul,
-.post-content ol {
-  font-size: 18px;
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-  padding-left: 2rem;
-}
-
-.post-content li {
-  margin-bottom: 0.5rem;
-}
-
-/* 链接样式优化 */
-.post-content a {
+/* 文章内容中的链接 */
+.post-content a,
+.entry-content a {
   color: var(--primary);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s ease;
 }
 
-.post-content a:hover {
+.post-content a:hover,
+.entry-content a:hover {
   border-bottom-color: var(--primary);
 }
 
-/* 强调文本 */
-.post-content strong {
+/* 文章内容中的强调文本 */
+.post-content strong,
+.entry-content strong {
   font-weight: 600;
   color: var(--content);
 }
 
-.post-content em {
+.post-content em,
+.entry-content em {
   font-style: italic;
   color: var(--content);
 }
 
-/* 表格样式优化 */
-.post-content table {
+/* 文章内容中的表格 */
+.post-content table,
+.entry-content table {
   font-size: 16px;
   line-height: 1.6;
   border-collapse: collapse;
@@ -173,19 +167,23 @@ blockquote {
 }
 
 .post-content th,
-.post-content td {
+.post-content td,
+.entry-content th,
+.entry-content td {
   padding: 0.75rem 1rem;
   border: 1px solid var(--border);
   text-align: left;
 }
 
-.post-content th {
+.post-content th,
+.entry-content th {
   background-color: var(--entry);
   font-weight: 600;
 }
 
-/* 水平分割线 */
-.post-content hr {
+/* 文章内容中的水平分割线 */
+.post-content hr,
+.entry-content hr {
   border: none;
   height: 2px;
   background: linear-gradient(
@@ -197,24 +195,25 @@ blockquote {
   margin: 3rem 0;
 }
 
-/* 响应式字体大小 */
+/* 响应式字体大小 - 只针对文章内容 */
 @media (max-width: 768px) {
-  body {
-    font-size: 16px;
-  }
-
   .post-content,
   .entry-content {
     font-size: 17px;
   }
 
-  h1 {
-    font-size: 2rem;
+  .post-content h1,
+  .entry-content h1 {
+    font-size: 1.8rem;
   }
-  h2 {
-    font-size: 1.75rem;
+
+  .post-content h2,
+  .entry-content h2 {
+    font-size: 1.6rem;
   }
-  h3 {
+
+  .post-content h3,
+  .entry-content h3 {
     font-size: 1.4rem;
   }
 }
