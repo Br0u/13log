@@ -54,7 +54,7 @@ enableEmoji = true
 
         [[params.profileMode.buttons]]
         name = "Photos"
-        url  = "/photos.html"
+        url  = "/photos/"
 
         #[[params.socialIcons]]
         #name = "github"
