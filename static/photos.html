@@ -151,7 +151,6 @@
         opacity: 1;
         transform: translateY(-2px);
       }
-
     </style>
   </head>
   <body>
@@ -368,7 +367,9 @@
       function setupThemeFollow() {
         // 检查本地存储的主题偏好（与主站同步）
         const savedTheme = localStorage.getItem("pref-theme");
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
 
         // 应用主题（与PaperMod逻辑一致）
         if (savedTheme === "dark") {
@@ -379,7 +380,10 @@
           document.body.classList.add("dark");
         }
 
-        console.log("📸 Photos页面主题已同步:", savedTheme || (systemPrefersDark ? "dark" : "light"));
+        console.log(
+          "📸 Photos页面主题已同步:",
+          savedTheme || (systemPrefersDark ? "dark" : "light")
+        );
       }
 
       // 页面加载完成后初始化
