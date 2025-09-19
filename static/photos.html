@@ -204,6 +204,7 @@
     <div class="batch-switcher">
       <button class="batch-btn active" data-batch="Random">Random</button>
       <button class="batch-btn" data-batch="April">April</button>
+      <button class="batch-btn" data-batch="Again">Again</button>
     </div>
 
     <!-- 批次信息 -->
@@ -307,6 +308,20 @@
           { title: "April 15", url: "/images/gallery/gal01/R0001939.jpg" },
           { title: "April 16", url: "/images/gallery/gal01/R0001940.jpg" },
           { title: "April 17", url: "/images/gallery/gal01/R0001942.JPG" },
+        ],
+        Again: [
+          { title: "Again 01", url: "/images/gallery/gal02/132218.JPG" },
+          { title: "Again 02", url: "/images/gallery/gal02/135776.JPG" },
+          { title: "Again 03", url: "/images/gallery/gal02/196598.JPG" },
+          { title: "Again 04", url: "/images/gallery/gal02/569.JPG" },
+          { title: "Again 05", url: "/images/gallery/gal02/759.JPG" },
+          { title: "Again 06", url: "/images/gallery/gal02/806.JPG" },
+          { title: "Again 07", url: "/images/gallery/gal02/IMG_0943.jpg" },
+          { title: "Again 08", url: "/images/gallery/gal02/IMG_2115.JPG" },
+          { title: "Again 09", url: "/images/gallery/gal02/IMG_5242.jpg" },
+          { title: "Again 10", url: "/images/gallery/gal02/IMG_5761.jpg" },
+          { title: "Again 11", url: "/images/gallery/gal02/IMG_7812.jpg" },
+          { title: "Again 12", url: "/images/gallery/gal02/R0003383.JPG" },
         ],
       };
 
@@ -466,6 +481,7 @@
           // 数字键切换批次
           if (e.key === "1") switchBatch("Random");
           if (e.key === "2") switchBatch("April");
+          if (e.key === "3") switchBatch("Again");
         });
 
         // 触摸手势支持
