@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photos - 13log</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg-color: #000;
+        --text-color: white;
+        --border-color: rgba(255, 255, 255, 0.25);
+        --bg-overlay: rgba(255, 255, 255, 0.1);
+        --btn-hover: rgba(255, 255, 255, 0.2);
+      }
+
+      body.light {
+        --bg-color: #fafafa;
+        --text-color: #1d1d1d;
+        --border-color: rgba(0, 0, 0, 0.25);
+        --bg-overlay: rgba(0, 0, 0, 0.1);
+        --btn-hover: rgba(0, 0, 0, 0.2);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: var(--bg-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .gallery-container {
+        position: relative;
+        background: var(--bg-overlay);
+        border: 1px solid var(--border-color);
+        padding: 8px;
+      }
+
+      #flip-gallery {
+        position: relative;
+        width: 300px;
+        height: 500px;
+        text-align: center;
+        perspective: 1000px;
+      }
+
+      @media (min-width: 600px) {
+        #flip-gallery {
+          width: 360px;
+          height: 600px;
+        }
+      }
+
+      @media (min-width: 768px) {
+        #flip-gallery {
+          width: 400px;
+          height: 640px;
+        }
+      }
+
+      #flip-gallery::after {
+        content: "";
+        position: absolute;
+        background-color: black;
+        width: 100%;
+        height: 4px;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+
+      #flip-gallery::before {
+        content: attr(data-title);
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.75rem;
+        left: -0.5rem;
+        position: absolute;
+        top: calc(100% + 1rem);
+        line-height: 2;
+        opacity: var(--title-opacity, 0);
+        transform: translateY(var(--title-y, 0));
+        transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
+      }
+
+      #flip-gallery > * {
+        position: absolute;
+        width: 100%;
+        height: 50%;
+        overflow: hidden;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .top,
+      .overlay-top {
+        top: 0;
+        transform-origin: bottom;
+        background-position: top;
+      }
+
+      .bottom,
+      .overlay-bottom {
+        bottom: 0;
+        transform-origin: top;
+        background-position: bottom;
+      }
+
+      .navigation {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 8px;
+        display: flex;
+        gap: 8px;
+      }
+
+      .nav-button {
+        background: none;
+        border: none;
+        color: var(--text-color);
+        opacity: 0.75;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 4px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-button:hover {
+        opacity: 1;
+        transform: scale(1.25);
+      }
+
+      /* 返回按钮 */
+      .back-btn {
+        position: absolute;
+        top: 20px;
+        right: 80px;
+        background: var(--bg-overlay);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        font-size: 0.9rem;
+        z-index: 20;
+      }
+
+      .back-btn:hover {
+        background: var(--btn-hover);
+        transform: translateY(-2px);
+      }
+
+      /* 主题切换按钮 */
+      #theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: var(--bg-overlay);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+      }
+
+      #theme-toggle:hover {
+        background: var(--btn-hover);
+        transform: translateY(-2px);
+      }
+
+      body:not(.light) #sun {
+        display: none;
+      }
+
+      body.light #moon {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 返回按钮 -->
+    <a href="/" class="back-btn">←</a>
+
+    <!-- 主题切换按钮 -->
+    <button id="theme-toggle" title="Toggle theme">
+      <svg
+        id="moon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg
+        id="sun"
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    </button>
+
+    <div class="gallery-container">
+      <!-- 翻转画廊 -->
+      <div id="flip-gallery" data-title="">
+        <div class="top unite"></div>
+        <div class="bottom unite"></div>
+        <div class="overlay-top unite"></div>
+        <div class="overlay-bottom unite"></div>
+      </div>
+
+      <!-- 导航按钮 -->
+      <div class="navigation">
+        <button type="button" class="nav-button" id="prevBtn" title="Previous">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="15,18 9,12 15,6"></polyline>
+          </svg>
+        </button>
+        <button type="button" class="nav-button" id="nextBtn" title="Next">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="9,18 15,12 9,6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // 照片数据 - 使用你的个人作品
+      const images = [
+        // JPG格式照片（优先使用，兼容性好）
+        {
+          title: "摄影作品 01",
+          url: "/images/gallery/05051dcb0t816a84ff98745e8c52828a.jpg",
+        },
+        {
+          title: "摄影作品 02",
+          url: "/images/gallery/1b0b6ebfekd712a8c9ddb3a919f6e51b.jpg",
+        },
+        {
+          title: "摄影作品 03",
+          url: "/images/gallery/c310c2b15s058b7dad526c25892e071d.jpg",
+        },
+        {
+          title: "摄影作品 04",
+          url: "/images/gallery/e432e79a6nb6db538d9df8e8daf47bcd.jpg",
+        },
+        { title: "胶片记录 01", url: "/images/gallery/R0001640.jpg" },
+        { title: "胶片记录 02", url: "/images/gallery/R0002247.jpg" },
+        { title: "胶片记录 03", url: "/images/gallery/R0003289.jpg" },
+
+        // 生活瞬间照片（已转换为JPG格式）
+        { title: "生活瞬间 01", url: "/images/gallery/IMG_1947.jpg" },
+        { title: "生活瞬间 02", url: "/images/gallery/IMG_3058.jpg" },
+        { title: "生活瞬间 03", url: "/images/gallery/IMG_3545.jpg" },
+        { title: "生活瞬间 04", url: "/images/gallery/IMG_3658.jpg" },
+        { title: "生活瞬间 05", url: "/images/gallery/IMG_4023.jpg" },
+        { title: "生活瞬间 06", url: "/images/gallery/IMG_4256.jpg" },
+        { title: "生活瞬间 07", url: "/images/gallery/IMG_4290.jpg" },
+        { title: "生活瞬间 08", url: "/images/gallery/IMG_7282.jpg" },
+        { title: "生活瞬间 09", url: "/images/gallery/IMG_7285.jpg" },
+        { title: "生活瞬间 10", url: "/images/gallery/IMG_8441.jpg" },
+        { title: "生活瞬间 11", url: "/images/gallery/IMG_8682.jpg" },
+        { title: "生活瞬间 12", url: "/images/gallery/IMG_8790.jpg" },
+        { title: "生活瞬间 13", url: "/images/gallery/IMG_8812.jpg" },
+        { title: "生活瞬间 14", url: "/images/gallery/IMG_8819.jpg" },
+        { title: "生活瞬间 15", url: "/images/gallery/IMG_9132.jpg" },
+      ];
+
+      // 照片画廊已优化：所有图片都使用JPG格式，确保最佳兼容性
+      console.log("📸 照片画廊加载完成 - 共 " + images.length + " 张照片");
+
+      // 配置
+      const FLIP_SPEED = 750;
+      const flipTiming = { duration: FLIP_SPEED, iterations: 1 };
+
+      // 翻转动画关键帧
+      const flipAnimationTop = [
+        { transform: "rotateX(0)" },
+        { transform: "rotateX(-90deg)" },
+        { transform: "rotateX(-90deg)" },
+      ];
+      const flipAnimationBottom = [
+        { transform: "rotateX(90deg)" },
+        { transform: "rotateX(90deg)" },
+        { transform: "rotateX(0)" },
+      ];
+
+      // 反向翻转动画关键帧
+      const flipAnimationTopReverse = [
+        { transform: "rotateX(-90deg)" },
+        { transform: "rotateX(-90deg)" },
+        { transform: "rotateX(0)" },
+      ];
+      const flipAnimationBottomReverse = [
+        { transform: "rotateX(0)" },
+        { transform: "rotateX(90deg)" },
+        { transform: "rotateX(90deg)" },
+      ];
+
+      // 全局变量
+      let currentIndex = 0;
+      let container, uniteElements;
+
+      // 初始化
+      function init() {
+        container = document.getElementById("flip-gallery");
+        uniteElements = container.querySelectorAll(".unite");
+
+        defineFirstImg();
+        setupEventListeners();
+
+        // 隐藏加载提示
+        document.getElementById("loading").style.display = "none";
+      }
+
+      // 设置第一张图片
+      function defineFirstImg() {
+        uniteElements.forEach(setActiveImage);
+        setImageTitle();
+      }
+
+      // 设置活动图片（简化版本 - 所有图片都是JPG格式）
+      function setActiveImage(el) {
+        const imageUrl = images[currentIndex].url;
+        el.style.backgroundImage = `url('${imageUrl}')`;
+      }
+
+      // 设置图片标题
+      function setImageTitle() {
+        container.setAttribute("data-title", images[currentIndex].title);
+        container.style.setProperty("--title-y", "0");
+        container.style.setProperty("--title-opacity", "1");
+      }
+
+      // 更新画廊
+      function updateGallery(nextIndex, isReverse = false) {
+        // 确定动画方向
+        const topAnim = isReverse ? flipAnimationTopReverse : flipAnimationTop;
+        const bottomAnim = isReverse
+          ? flipAnimationBottomReverse
+          : flipAnimationBottom;
+
+        // 执行翻转动画
+        container.querySelector(".overlay-top").animate(topAnim, flipTiming);
+        container
+          .querySelector(".overlay-bottom")
+          .animate(bottomAnim, flipTiming);
+
+        // 隐藏标题
+        container.style.setProperty("--title-y", "-1rem");
+        container.style.setProperty("--title-opacity", "0");
+        container.setAttribute("data-title", "");
+
+        // 更新图片（带延迟以保持动画连续性）
+        uniteElements.forEach((el, idx) => {
+          const delay =
+            (isReverse && idx !== 1 && idx !== 2) ||
+            (!isReverse && (idx === 1 || idx === 2))
+              ? FLIP_SPEED - 200
+              : 0;
+
+          setTimeout(() => setActiveImage(el), delay);
+        });
+
+        // 在动画中途显示新标题
+        setTimeout(setImageTitle, FLIP_SPEED * 0.5);
+      }
+
+      // 更新索引
+      function updateIndex(increment) {
+        const inc = Number(increment);
+        const newIndex = (currentIndex + inc + images.length) % images.length;
+        const isReverse = inc < 0;
+        currentIndex = newIndex;
+        updateGallery(newIndex, isReverse);
+      }
+
+      // 设置事件监听器
+      function setupEventListeners() {
+        document
+          .getElementById("prevBtn")
+          .addEventListener("click", () => updateIndex(-1));
+        document
+          .getElementById("nextBtn")
+          .addEventListener("click", () => updateIndex(1));
+
+        // 键盘导航
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") updateIndex(-1);
+          if (e.key === "ArrowRight") updateIndex(1);
+        });
+
+        // 触摸手势支持
+        let touchStartX = 0;
+        container.addEventListener("touchstart", (e) => {
+          touchStartX = e.touches[0].clientX;
+        });
+
+        container.addEventListener("touchend", (e) => {
+          const touchEndX = e.changedTouches[0].clientX;
+          const diff = touchStartX - touchEndX;
+
+          if (Math.abs(diff) > 50) {
+            // 最小滑动距离
+            if (diff > 0) {
+              updateIndex(1); // 向左滑动，下一张
+            } else {
+              updateIndex(-1); // 向右滑动，上一张
+            }
+          }
+        });
+      }
+
+      // 主题切换功能
+      function setupThemeToggle() {
+        // 检查本地存储的主题偏好
+        const savedTheme = localStorage.getItem("pref-theme");
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+
+        // 设置初始主题
+        if (savedTheme === "light" || (!savedTheme && !systemPrefersDark)) {
+          document.body.classList.add("light");
+        }
+
+        // 主题切换按钮事件
+        document
+          .getElementById("theme-toggle")
+          .addEventListener("click", () => {
+            if (document.body.classList.contains("light")) {
+              document.body.classList.remove("light");
+              localStorage.setItem("pref-theme", "dark");
+            } else {
+              document.body.classList.add("light");
+              localStorage.setItem("pref-theme", "light");
+            }
+          });
+
+        // 键盘快捷键支持 (Alt + T)
+        document.addEventListener("keydown", (e) => {
+          if (e.altKey && e.key === "t") {
+            document.getElementById("theme-toggle").click();
+          }
+        });
+      }
+
+      // 页面加载完成后初始化
+      document.addEventListener("DOMContentLoaded", () => {
+        init();
+        setupThemeToggle();
+      });
+    </script>
+  </body>
+</html>
