@@ -151,11 +151,66 @@
         opacity: 1;
         transform: translateY(-2px);
       }
+
+      /* 批次切换器 */
+      .batch-switcher {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        gap: 8px;
+        z-index: 20;
+      }
+
+      .batch-btn {
+        background: transparent;
+        border: 1px solid var(--text-color);
+        color: var(--text-color);
+        padding: 6px 12px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.8rem;
+        opacity: 0.6;
+      }
+
+      .batch-btn.active {
+        background: var(--text-color);
+        color: var(--bg-color);
+        opacity: 1;
+      }
+
+      .batch-btn:hover {
+        opacity: 1;
+        transform: translateY(-1px);
+      }
+
+      /* 批次信息显示 */
+      .batch-info {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        font-size: 0.8rem;
+        opacity: 0.7;
+        z-index: 20;
+      }
     </style>
   </head>
   <body>
     <!-- 返回按钮 -->
     <a href="/" class="back-btn">←</a>
+
+    <!-- 批次切换器 -->
+    <div class="batch-switcher">
+      <button class="batch-btn active" data-batch="摄影作品">摄影作品</button>
+      <button class="batch-btn" data-batch="胶片记录">胶片记录</button>
+      <button class="batch-btn" data-batch="生活瞬间">生活瞬间</button>
+    </div>
+
+    <!-- 批次信息 -->
+    <div class="batch-info" id="batchInfo">
+      摄影作品 (4/4)
+    </div>
 
     <div class="gallery-container">
       <!-- 翻转画廊 -->
@@ -196,49 +251,76 @@
     </div>
 
     <script>
-      // 照片数据 - 使用你的个人作品
-      const images = [
-        // JPG格式照片（优先使用，兼容性好）
-        {
-          title: "摄影作品 01",
-          url: "/images/gallery/05051dcb0t816a84ff98745e8c52828a.jpg",
-        },
-        {
-          title: "摄影作品 02",
-          url: "/images/gallery/1b0b6ebfekd712a8c9ddb3a919f6e51b.jpg",
-        },
-        {
-          title: "摄影作品 03",
-          url: "/images/gallery/c310c2b15s058b7dad526c25892e071d.jpg",
-        },
-        {
-          title: "摄影作品 04",
-          url: "/images/gallery/e432e79a6nb6db538d9df8e8daf47bcd.jpg",
-        },
-        { title: "胶片记录 01", url: "/images/gallery/R0001640.jpg" },
-        { title: "胶片记录 02", url: "/images/gallery/R0002247.jpg" },
-        { title: "胶片记录 03", url: "/images/gallery/R0003289.jpg" },
+      // 照片批次分类
+      const photoBatches = {
+        "摄影作品": [
+          { title: "摄影作品 01", url: "/images/gallery/05051dcb0t816a84ff98745e8c52828a.jpg" },
+          { title: "摄影作品 02", url: "/images/gallery/1b0b6ebfekd712a8c9ddb3a919f6e51b.jpg" },
+          { title: "摄影作品 03", url: "/images/gallery/c310c2b15s058b7dad526c25892e071d.jpg" },
+          { title: "摄影作品 04", url: "/images/gallery/e432e79a6nb6db538d9df8e8daf47bcd.jpg" },
+        ],
+        "胶片记录": [
+          { title: "胶片记录 01", url: "/images/gallery/R0001640.jpg" },
+          { title: "胶片记录 02", url: "/images/gallery/R0002247.jpg" },
+          { title: "胶片记录 03", url: "/images/gallery/R0003289.jpg" },
+        ],
+        "生活瞬间": [
+          { title: "生活瞬间 01", url: "/images/gallery/IMG_1947.jpg" },
+          { title: "生活瞬间 02", url: "/images/gallery/IMG_3058.jpg" },
+          { title: "生活瞬间 03", url: "/images/gallery/IMG_3545.jpg" },
+          { title: "生活瞬间 04", url: "/images/gallery/IMG_3658.jpg" },
+          { title: "生活瞬间 05", url: "/images/gallery/IMG_4023.jpg" },
+          { title: "生活瞬间 06", url: "/images/gallery/IMG_4256.jpg" },
+          { title: "生活瞬间 07", url: "/images/gallery/IMG_4290.jpg" },
+          { title: "生活瞬间 08", url: "/images/gallery/IMG_7282.jpg" },
+          { title: "生活瞬间 09", url: "/images/gallery/IMG_7285.jpg" },
+          { title: "生活瞬间 10", url: "/images/gallery/IMG_8441.jpg" },
+          { title: "生活瞬间 11", url: "/images/gallery/IMG_8682.jpg" },
+          { title: "生活瞬间 12", url: "/images/gallery/IMG_8790.jpg" },
+          { title: "生活瞬间 13", url: "/images/gallery/IMG_8812.jpg" },
+          { title: "生活瞬间 14", url: "/images/gallery/IMG_8819.jpg" },
+          { title: "生活瞬间 15", url: "/images/gallery/IMG_9132.jpg" },
+        ]
+      };
 
-        // 生活瞬间照片（已转换为JPG格式）
-        { title: "生活瞬间 01", url: "/images/gallery/IMG_1947.jpg" },
-        { title: "生活瞬间 02", url: "/images/gallery/IMG_3058.jpg" },
-        { title: "生活瞬间 03", url: "/images/gallery/IMG_3545.jpg" },
-        { title: "生活瞬间 04", url: "/images/gallery/IMG_3658.jpg" },
-        { title: "生活瞬间 05", url: "/images/gallery/IMG_4023.jpg" },
-        { title: "生活瞬间 06", url: "/images/gallery/IMG_4256.jpg" },
-        { title: "生活瞬间 07", url: "/images/gallery/IMG_4290.jpg" },
-        { title: "生活瞬间 08", url: "/images/gallery/IMG_7282.jpg" },
-        { title: "生活瞬间 09", url: "/images/gallery/IMG_7285.jpg" },
-        { title: "生活瞬间 10", url: "/images/gallery/IMG_8441.jpg" },
-        { title: "生活瞬间 11", url: "/images/gallery/IMG_8682.jpg" },
-        { title: "生活瞬间 12", url: "/images/gallery/IMG_8790.jpg" },
-        { title: "生活瞬间 13", url: "/images/gallery/IMG_8812.jpg" },
-        { title: "生活瞬间 14", url: "/images/gallery/IMG_8819.jpg" },
-        { title: "生活瞬间 15", url: "/images/gallery/IMG_9132.jpg" },
-      ];
+      // 批次管理
+      const batchNames = Object.keys(photoBatches);
+      let currentBatchIndex = 0;
+      let currentBatch = batchNames[currentBatchIndex];
+      let images = photoBatches[currentBatch];
 
-      // 照片画廊已优化：所有图片都使用JPG格式，确保最佳兼容性
-      console.log("📸 照片画廊加载完成 - 共 " + images.length + " 张照片");
+      console.log(`📸 照片画廊加载完成 - 当前批次: ${currentBatch} (${images.length}张)`);
+
+      // 切换批次
+      function switchBatch(batchName) {
+        currentBatch = batchName;
+        currentBatchIndex = batchNames.indexOf(batchName);
+        images = photoBatches[currentBatch];
+        currentIndex = 0; // 重置到第一张照片
+        
+        // 更新UI
+        updateBatchButtons();
+        updateBatchInfo();
+        defineFirstImg();
+        
+        console.log(`切换到批次: ${currentBatch} (${images.length}张)`);
+      }
+
+      // 更新批次按钮状态
+      function updateBatchButtons() {
+        document.querySelectorAll('.batch-btn').forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.dataset.batch === currentBatch) {
+            btn.classList.add('active');
+          }
+        });
+      }
+
+      // 更新批次信息显示
+      function updateBatchInfo() {
+        const info = document.getElementById('batchInfo');
+        info.textContent = `${currentBatch} (${currentIndex + 1}/${images.length})`;
+      }
 
       // 配置
       const FLIP_SPEED = 750;
@@ -284,6 +366,7 @@
       // 设置第一张图片
       function defineFirstImg() {
         uniteElements.forEach(setActiveImage);
+        updateBatchInfo();
       }
 
       // 设置活动图片（简化版本 - 所有图片都是JPG格式）
@@ -325,10 +408,12 @@
         const isReverse = inc < 0;
         currentIndex = newIndex;
         updateGallery(newIndex, isReverse);
+        updateBatchInfo(); // 更新批次信息
       }
 
       // 设置事件监听器
       function setupEventListeners() {
+        // 照片导航
         document
           .getElementById("prevBtn")
           .addEventListener("click", () => updateIndex(-1));
@@ -336,10 +421,21 @@
           .getElementById("nextBtn")
           .addEventListener("click", () => updateIndex(1));
 
+        // 批次切换
+        document.querySelectorAll('.batch-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            switchBatch(btn.dataset.batch);
+          });
+        });
+
         // 键盘导航
         document.addEventListener("keydown", (e) => {
           if (e.key === "ArrowLeft") updateIndex(-1);
           if (e.key === "ArrowRight") updateIndex(1);
+          // 数字键切换批次
+          if (e.key === "1") switchBatch("摄影作品");
+          if (e.key === "2") switchBatch("胶片记录");
+          if (e.key === "3") switchBatch("生活瞬间");
         });
 
         // 触摸手势支持
