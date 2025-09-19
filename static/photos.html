@@ -202,14 +202,12 @@
 
     <!-- 批次切换器 -->
     <div class="batch-switcher">
-      <button class="batch-btn active" data-batch="摄影作品">摄影作品</button>
-      <button class="batch-btn" data-batch="胶片记录">胶片记录</button>
+      <button class="batch-btn active" data-batch="Random">Random</button>
       <button class="batch-btn" data-batch="April">April</button>
-      <button class="batch-btn" data-batch="生活瞬间">生活瞬间</button>
     </div>
 
     <!-- 批次信息 -->
-    <div class="batch-info" id="batchInfo">摄影作品 (4/4)</div>
+    <div class="batch-info" id="batchInfo">Random (1/22)</div>
 
     <div class="gallery-container">
       <!-- 翻转画廊 -->
@@ -252,7 +250,8 @@
     <script>
       // 照片批次分类
       const photoBatches = {
-        摄影作品: [
+        Random: [
+          // 摄影作品
           {
             title: "摄影作品 01",
             url: "/images/gallery/05051dcb0t816a84ff98745e8c52828a.jpg",
@@ -269,11 +268,26 @@
             title: "摄影作品 04",
             url: "/images/gallery/e432e79a6nb6db538d9df8e8daf47bcd.jpg",
           },
-        ],
-        胶片记录: [
+          // 胶片记录
           { title: "胶片记录 01", url: "/images/gallery/R0001640.jpg" },
           { title: "胶片记录 02", url: "/images/gallery/R0002247.jpg" },
           { title: "胶片记录 03", url: "/images/gallery/R0003289.jpg" },
+          // 生活瞬间
+          { title: "生活瞬间 01", url: "/images/gallery/IMG_1947.jpg" },
+          { title: "生活瞬间 02", url: "/images/gallery/IMG_3058.jpg" },
+          { title: "生活瞬间 03", url: "/images/gallery/IMG_3545.jpg" },
+          { title: "生活瞬间 04", url: "/images/gallery/IMG_3658.jpg" },
+          { title: "生活瞬间 05", url: "/images/gallery/IMG_4023.jpg" },
+          { title: "生活瞬间 06", url: "/images/gallery/IMG_4256.jpg" },
+          { title: "生活瞬间 07", url: "/images/gallery/IMG_4290.jpg" },
+          { title: "生活瞬间 08", url: "/images/gallery/IMG_7282.jpg" },
+          { title: "生活瞬间 09", url: "/images/gallery/IMG_7285.jpg" },
+          { title: "生活瞬间 10", url: "/images/gallery/IMG_8441.jpg" },
+          { title: "生活瞬间 11", url: "/images/gallery/IMG_8682.jpg" },
+          { title: "生活瞬间 12", url: "/images/gallery/IMG_8790.jpg" },
+          { title: "生活瞬间 13", url: "/images/gallery/IMG_8812.jpg" },
+          { title: "生活瞬间 14", url: "/images/gallery/IMG_8819.jpg" },
+          { title: "生活瞬间 15", url: "/images/gallery/IMG_9132.jpg" },
         ],
         April: [
           { title: "April 01", url: "/images/gallery/gal01/R0001375.jpg" },
@@ -294,29 +308,12 @@
           { title: "April 16", url: "/images/gallery/gal01/R0001940.jpg" },
           { title: "April 17", url: "/images/gallery/gal01/R0001942.JPG" },
         ],
-        生活瞬间: [
-          { title: "生活瞬间 01", url: "/images/gallery/IMG_1947.jpg" },
-          { title: "生活瞬间 02", url: "/images/gallery/IMG_3058.jpg" },
-          { title: "生活瞬间 03", url: "/images/gallery/IMG_3545.jpg" },
-          { title: "生活瞬间 04", url: "/images/gallery/IMG_3658.jpg" },
-          { title: "生活瞬间 05", url: "/images/gallery/IMG_4023.jpg" },
-          { title: "生活瞬间 06", url: "/images/gallery/IMG_4256.jpg" },
-          { title: "生活瞬间 07", url: "/images/gallery/IMG_4290.jpg" },
-          { title: "生活瞬间 08", url: "/images/gallery/IMG_7282.jpg" },
-          { title: "生活瞬间 09", url: "/images/gallery/IMG_7285.jpg" },
-          { title: "生活瞬间 10", url: "/images/gallery/IMG_8441.jpg" },
-          { title: "生活瞬间 11", url: "/images/gallery/IMG_8682.jpg" },
-          { title: "生活瞬间 12", url: "/images/gallery/IMG_8790.jpg" },
-          { title: "生活瞬间 13", url: "/images/gallery/IMG_8812.jpg" },
-          { title: "生活瞬间 14", url: "/images/gallery/IMG_8819.jpg" },
-          { title: "生活瞬间 15", url: "/images/gallery/IMG_9132.jpg" },
-        ],
       };
 
       // 批次管理
       const batchNames = Object.keys(photoBatches);
       let currentBatchIndex = 0;
-      let currentBatch = batchNames[currentBatchIndex];
+      let currentBatch = "Random"; // 默认显示Random批次
       let images = photoBatches[currentBatch];
 
       console.log(
@@ -467,10 +464,8 @@
           if (e.key === "ArrowLeft") updateIndex(-1);
           if (e.key === "ArrowRight") updateIndex(1);
           // 数字键切换批次
-          if (e.key === "1") switchBatch("摄影作品");
-          if (e.key === "2") switchBatch("胶片记录");
-          if (e.key === "3") switchBatch("April");
-          if (e.key === "4") switchBatch("生活瞬间");
+          if (e.key === "1") switchBatch("Random");
+          if (e.key === "2") switchBatch("April");
         });
 
         // 触摸手势支持
