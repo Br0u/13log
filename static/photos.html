@@ -152,14 +152,30 @@
         transform: translateY(-2px);
       }
 
-      /* 批次切换器 */
+      /* 批次切换器 - 可滑动 */
       .batch-switcher {
         position: absolute;
         top: 20px;
         left: 20px;
-        display: flex;
-        gap: 8px;
+        right: 80px; /* 为返回按钮留空间 */
         z-index: 20;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        padding: 4px 0;
+        /* 隐藏滚动条但保持功能 */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+      }
+
+      .batch-switcher::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+
+      .batch-switcher-inner {
+        display: inline-flex;
+        gap: 8px;
+        padding: 0 4px;
       }
 
       .batch-btn {
@@ -172,6 +188,8 @@
         transition: all 0.3s ease;
         font-size: 0.8rem;
         opacity: 0.6;
+        white-space: nowrap;
+        flex-shrink: 0; /* 防止按钮被压缩 */
       }
 
       .batch-btn.active {
@@ -183,6 +201,19 @@
       .batch-btn:hover {
         opacity: 1;
         transform: translateY(-1px);
+      }
+
+      /* 滑动指示器 */
+      .batch-switcher::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 20px;
+        background: linear-gradient(to right, transparent, var(--bg-color));
+        pointer-events: none;
+        opacity: 0.8;
       }
 
       /* 批次信息显示 */
@@ -200,11 +231,13 @@
     <!-- 返回按钮 -->
     <a href="/" class="back-btn">←</a>
 
-    <!-- 批次切换器 -->
+    <!-- 批次切换器 - 可滑动 -->
     <div class="batch-switcher">
-      <button class="batch-btn active" data-batch="Random">Random</button>
-      <button class="batch-btn" data-batch="April">April</button>
-      <button class="batch-btn" data-batch="Again">Again</button>
+      <div class="batch-switcher-inner">
+        <button class="batch-btn active" data-batch="Random">Random</button>
+        <button class="batch-btn" data-batch="April">April</button>
+        <button class="batch-btn" data-batch="Again">Again</button>
+      </div>
     </div>
 
     <!-- 批次信息 -->
@@ -362,8 +395,76 @@
           btn.classList.remove("active");
           if (btn.dataset.batch === currentBatch) {
             btn.classList.add("active");
+            // 自动滚动到活动按钮
+            scrollToActiveButton(btn);
           }
         });
+      }
+
+      // 滚动到活动按钮
+      function scrollToActiveButton(activeBtn) {
+        const switcher = document.querySelector('.batch-switcher');
+        const btnRect = activeBtn.getBoundingClientRect();
+        const switcherRect = switcher.getBoundingClientRect();
+        
+        // 计算需要滚动的距离
+        const scrollLeft = activeBtn.offsetLeft - switcher.offsetWidth / 2 + activeBtn.offsetWidth / 2;
+        
+        // 平滑滚动
+        switcher.scrollTo({
+          left: scrollLeft,
+          behavior: 'smooth'
+        });
+      }
+
+      // 设置批次切换器的触摸滑动
+      function setupBatchSwitcherScroll() {
+        const switcher = document.querySelector('.batch-switcher');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        // 鼠标事件
+        switcher.addEventListener('mousedown', (e) => {
+          isDown = true;
+          switcher.style.cursor = 'grabbing';
+          startX = e.pageX - switcher.offsetLeft;
+          scrollLeft = switcher.scrollLeft;
+        });
+
+        switcher.addEventListener('mouseleave', () => {
+          isDown = false;
+          switcher.style.cursor = 'grab';
+        });
+
+        switcher.addEventListener('mouseup', () => {
+          isDown = false;
+          switcher.style.cursor = 'grab';
+        });
+
+        switcher.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - switcher.offsetLeft;
+          const walk = (x - startX) * 2;
+          switcher.scrollLeft = scrollLeft - walk;
+        });
+
+        // 触摸事件
+        let touchStartX = 0;
+        switcher.addEventListener('touchstart', (e) => {
+          touchStartX = e.touches[0].clientX;
+          scrollLeft = switcher.scrollLeft;
+        }, { passive: true });
+
+        switcher.addEventListener('touchmove', (e) => {
+          const touchX = e.touches[0].clientX;
+          const walk = touchStartX - touchX;
+          switcher.scrollLeft = scrollLeft + walk;
+        }, { passive: true });
+
+        // 设置初始样式
+        switcher.style.cursor = 'grab';
       }
 
       // 更新批次信息显示
@@ -636,7 +737,8 @@
       document.addEventListener("DOMContentLoaded", () => {
         init();
         setupThemeFollow();
-
+        setupBatchSwitcherScroll(); // 设置批次切换器滑动
+        
         // 启动预加载队列
         setTimeout(() => {
           console.log("🚀 启动图片预加载队列...");
