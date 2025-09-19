@@ -15,18 +15,14 @@
       :root {
         --bg-color: #fafafa;
         --text-color: #1d1d1d;
-        --border-color: rgba(0, 0, 0, 0.25);
-        --bg-overlay: rgba(0, 0, 0, 0.1);
-        --btn-hover: rgba(0, 0, 0, 0.2);
+        --btn-hover: rgba(0, 0, 0, 0.1);
       }
 
       /* dark模式覆盖 */
       body.dark {
         --bg-color: #000;
         --text-color: white;
-        --border-color: rgba(255, 255, 255, 0.25);
-        --bg-overlay: rgba(255, 255, 255, 0.1);
-        --btn-hover: rgba(255, 255, 255, 0.2);
+        --btn-hover: rgba(255, 255, 255, 0.1);
       }
 
       body {
@@ -43,8 +39,6 @@
 
       .gallery-container {
         position: relative;
-        background: var(--bg-overlay);
-        border: 1px solid var(--border-color);
         padding: 8px;
       }
 
@@ -138,102 +132,31 @@
       .back-btn {
         position: absolute;
         top: 20px;
-        right: 80px;
-        background: var(--bg-overlay);
-        border: 1px solid var(--border-color);
+        right: 20px;
+        background: transparent;
+        border: none;
         color: var(--text-color);
         padding: 8px 16px;
         border-radius: 8px;
         cursor: pointer;
         transition: all 0.3s ease;
         text-decoration: none;
-        font-size: 0.9rem;
+        font-size: 1.2rem;
         z-index: 20;
+        opacity: 0.7;
       }
 
       .back-btn:hover {
         background: var(--btn-hover);
+        opacity: 1;
         transform: translateY(-2px);
       }
 
-      /* 主题切换按钮 */
-      #theme-toggle {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: var(--bg-overlay);
-        border: 1px solid var(--border-color);
-        color: var(--text-color);
-        padding: 8px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 20px;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 20;
-      }
-
-      #theme-toggle:hover {
-        background: var(--btn-hover);
-        transform: translateY(-2px);
-      }
-
-      body:not(.dark) #moon {
-        display: none;
-      }
-
-      body.dark #sun {
-        display: none;
-      }
     </style>
   </head>
   <body>
     <!-- 返回按钮 -->
     <a href="/" class="back-btn">←</a>
-
-    <!-- 主题切换按钮 -->
-    <button id="theme-toggle" title="Toggle theme">
-      <svg
-        id="moon"
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-      <svg
-        id="sun"
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      </svg>
-    </button>
 
     <div class="gallery-container">
       <!-- 翻转画廊 -->
@@ -357,9 +280,6 @@
 
         defineFirstImg();
         setupEventListeners();
-
-        // 隐藏加载提示
-        document.getElementById("loading").style.display = "none";
       }
 
       // 设置第一张图片
@@ -444,15 +364,13 @@
         });
       }
 
-      // 主题切换功能（完全仿照PaperMod）
-      function setupThemeToggle() {
-        // 检查本地存储的主题偏好
+      // 简单的主题跟随功能
+      function setupThemeFollow() {
+        // 检查本地存储的主题偏好（与主站同步）
         const savedTheme = localStorage.getItem("pref-theme");
-        const systemPrefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-        // 设置初始主题（PaperMod逻辑）
+        // 应用主题（与PaperMod逻辑一致）
         if (savedTheme === "dark") {
           document.body.classList.add("dark");
         } else if (savedTheme === "light") {
@@ -461,37 +379,13 @@
           document.body.classList.add("dark");
         }
 
-        // 主题切换按钮事件（完全仿照PaperMod）
-        document.getElementById("theme-toggle").addEventListener("click", () => {
-          console.log("主题切换按钮被点击");
-          console.log("当前body类名:", document.body.className);
-          
-          if (document.body.classList.contains("dark")) {
-            document.body.classList.remove("dark");
-            localStorage.setItem("pref-theme", "light");
-            console.log("切换到light模式");
-          } else {
-            document.body.classList.add("dark");
-            localStorage.setItem("pref-theme", "dark");
-            console.log("切换到dark模式");
-          }
-          
-          console.log("切换后body类名:", document.body.className);
-          console.log("当前CSS变量:", getComputedStyle(document.body).getPropertyValue('--bg-color'));
-        });
-
-        // 键盘快捷键支持 (Alt + T)
-        document.addEventListener("keydown", (e) => {
-          if (e.altKey && e.key === "t") {
-            document.getElementById("theme-toggle").click();
-          }
-        });
+        console.log("📸 Photos页面主题已同步:", savedTheme || (systemPrefersDark ? "dark" : "light"));
       }
 
       // 页面加载完成后初始化
       document.addEventListener("DOMContentLoaded", () => {
         init();
-        setupThemeToggle();
+        setupThemeFollow();
       });
     </script>
   </body>
