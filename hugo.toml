@@ -44,6 +44,10 @@ enableEmoji = true
         name = "Posts"
         url  = "/posts/"
 
+        [[params.profileMode.buttons]]
+        name = "Coding"
+        url  = "/coding/"
+
         # [[params.profileMode.buttons]]
         # name = "Archive"
         # url  = "/archives/"
