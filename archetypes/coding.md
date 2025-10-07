@@ -11,7 +11,7 @@ description: ""
 
 ## 示例代码
 
-```
+```javascript
 // 在这里写你的代码
 ```
 
