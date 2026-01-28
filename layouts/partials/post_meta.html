@@ -4,7 +4,12 @@
 {{- end }}
 {{- if (.Param "ShowReadingTime") -}}
   {{- $readingTime := .Params.readingTime | default .ReadingTime -}}
-  {{- $scratch.Add "meta" (slice (i18n "read_time" $readingTime | default (printf "%d min" $readingTime))) }}
+  {{- $readingLabel := (i18n "read_time" $readingTime | default (printf "%d min" $readingTime)) -}}
+  {{- if and .File (eq .File.TranslationBaseName "About") -}}
+    {{- $readingMinutes := cond (lt $readingTime 1) 1 $readingTime -}}
+    {{- $readingLabel = printf "阅读约 %d 分钟" $readingMinutes -}}
+  {{- end -}}
+  {{- $scratch.Add "meta" (slice $readingLabel) }}
 {{- end }}
 {{- if (.Param "ShowWordCount") -}}
   {{- $scratch.Add "meta" (slice (i18n "words" .WordCount | default (printf "%d words" .WordCount))) }}
