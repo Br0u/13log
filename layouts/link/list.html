@@ -1,0 +1,88 @@
+﻿{{- define "main" }}
+
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- if .Description }}
+  <div class="post-description">
+    {{ .Description | markdownify }}
+  </div>
+  {{- end }}
+</header>
+
+{{- if .Content }}
+<div class="post-content">
+  {{- if not (.Param "disableAnchoredHeadings") }}
+  {{- partial "anchored_headings.html" .Content -}}
+  {{- else }}{{ .Content }}{{ end }}
+</div>
+{{- end }}
+
+{{- $pages := .Pages }}
+{{- $paginator := .Paginate $pages }}
+
+<div class="posts-masonry">
+  {{- range $paginator.Pages }}
+  {{- $target := .Params.link | default .Permalink }}
+  {{- $previewEnabled := .Params.preview | default (site.Params.linkPreview | default true) }}
+  {{- $meta := dict }}
+  {{- if $previewEnabled }}
+    {{- $api := printf "https://api.ogfetch.com/preview?url=%s" (urlquery $target) }}
+    {{- $remote := try (resources.GetRemote $api) }}
+    {{- if and $remote (not $remote.Err) }}
+      {{- $meta = $remote.Value | transform.Unmarshal }}
+    {{- end }}
+  {{- end }}
+  {{- $title := $meta.title | default .Title }}
+  {{- $desc := $meta.description | default .Params.description | default (.Summary | plainify | htmlUnescape) }}
+  {{- $image := $meta.image }}
+  <div class="link-board-card">
+    <a class="link-board-card__main" href="{{ $target }}" target="_blank" rel="noopener">
+      {{- if $image }}
+      <div class="link-board-card__preview">
+        <img src="{{ $image }}" alt="" loading="lazy" decoding="async">
+      </div>
+      {{- end }}
+      <div class="link-board-card__title">{{ $title }}</div>
+      {{- if $desc }}
+      <div class="link-board-card__desc">{{ $desc }}</div>
+      {{- end }}
+      {{- if .Params.site }}
+      <div class="link-board-card__meta">{{ .Params.site }}</div>
+      {{- end }}
+    </a>
+
+    {{- with .Params.children }}
+    <div class="link-board-children">
+      {{- range . }}
+      <a class="link-board-child" href="{{ .link }}" target="_blank" rel="noopener">
+        <div class="link-board-child__title">{{ .title }}</div>
+        {{- if .description }}
+        <div class="link-board-child__desc">{{ .description }}</div>
+        {{- end }}
+      </a>
+      {{- end }}
+    </div>
+    {{- end }}
+  </div>
+  {{- end }}
+</div>
+
+{{- if gt $paginator.TotalPages 1 }}
+<footer class="page-footer">
+  <nav class="pagination">
+    {{- if $paginator.HasPrev }}
+    <a class="prev" href="{{ $paginator.Prev.URL | absURL }}">
+      {{ i18n "prev_page" }}
+    </a>
+    {{- end }}
+    {{- if $paginator.HasNext }}
+    <a class="next" href="{{ $paginator.Next.URL | absURL }}">
+      {{ i18n "next_page" }}
+    </a>
+    {{- end }}
+  </nav>
+</footer>
+{{- end }}
+
+{{- end }}

@@ -1,0 +1,2 @@
+{{- $shortcodes := resources.Get "js/shortcodes.js" | minify | fingerprint -}}
+<script defer src="{{ $shortcodes.RelPermalink }}" integrity="{{ $shortcodes.Data.Integrity }}" crossorigin="anonymous"></script>

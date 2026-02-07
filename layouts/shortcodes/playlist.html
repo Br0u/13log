@@ -1,62 +1,35 @@
 {{- $playlist := .Get "list" | default "[]" -}} {{- $title := .Get "title" |
-default "播放列表" -}}
+default "Playlist" -}}
 
-<div
-  class="playlist-player"
-  style="
-    margin: 20px 0;
-    padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 12px;
-    color: white;
-  "
->
-  <h3 style="margin: 0 0 15px 0; text-align: center">🎵 {{ $title }}</h3>
+<div class="playlist-player" data-playlist>
+  <h3 class="playlist-title">Playlist: {{ $title }}</h3>
 
-  <div class="playlist-container" style="max-height: 300px; overflow-y: auto">
+  <div class="playlist-container">
     {{- range $index, $song := getJSON $playlist -}}
     <div
       class="song-item"
-      style="
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        margin: 5px 0;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 6px;
-        cursor: pointer;
-      "
-      onclick="playSong('{{ $song.src }}', '{{ $song.title }}')"
+      role="button"
+      tabindex="0"
+      data-src="{{ $song.src }}"
+      data-title="{{ $song.title }}"
     >
-      <span style="margin-right: 10px; font-size: 18px">▶️</span>
-      <div style="flex: 1">
-        <div style="font-weight: bold">{{ $song.title }}</div>
-        <div style="font-size: 12px; opacity: 0.8">
-          {{ $song.artist | default "未知艺术家" }}
+      <span class="song-item__icon">Play</span>
+      <div class="song-item__meta">
+        <div class="song-item__title">{{ $song.title }}</div>
+        <div class="song-item__artist">
+          {{ $song.artist | default "Unknown artist" }}
         </div>
       </div>
-      <span style="font-size: 12px; opacity: 0.7"
-        >{{ $song.duration | default "未知时长" }}</span
+      <span class="song-item__duration"
+        >{{ $song.duration | default "Unknown duration" }}</span
       >
     </div>
     {{- end -}}
   </div>
 
-  <div class="player-controls" style="margin-top: 15px; text-align: center">
-    <audio id="main-player" controls style="width: 100%; max-width: 400px">
-      您的浏览器不支持音频播放。
+  <div class="player-controls">
+    <audio class="playlist-audio" controls preload="metadata">
+      Your browser does not support audio playback.
     </audio>
   </div>
 </div>
-
-<script>
-  function playSong(src, title) {
-    const player = document.getElementById("main-player");
-    player.src = src;
-    player.play();
-
-    // 更新播放器标题
-    const titleElement = document.querySelector(".playlist-player h3");
-    titleElement.textContent = `🎵 正在播放: ${title}`;
-  }
-</script>

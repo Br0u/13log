@@ -14,6 +14,7 @@ enableEmoji = true
                                            # Hugo 0.128+ 要用这个键
 
 [params]
+  browserTitle = "我的小小世界"
   defaultTheme = "auto"
   ShowReadingTime = true
   ShowToc = true
@@ -34,32 +35,33 @@ enableEmoji = true
   theme_color = "#2e2e33"
   msapplication_TileColor = "#2e2e33"
 
-    [params.profileMode]
-    enabled = true
-    title = "花似伊，柳似伊"
-    imageUrl = "/images/avatar.jpg"
-    imageTitle = "Avatar"
-    subtitle = "Coding • Books • Life"
-        [[params.profileMode.buttons]]
-        name = "Posts"
-        url  = "/posts/"
+[params.profileMode]
+  enabled = true
+  title = "花似伊，柳似伊"
+  imageUrl = "/images/avatar.jpg"
+  imageTitle = "Avatar"
+  subtitle = "Coding • Books • Life"
 
-        [[params.profileMode.buttons]]
-        name = "Coding"
-        url  = "/coding/"
+  [[params.profileMode.buttons]]
+  name = "Posts"
+  url  = "/posts/"
 
-        # [[params.profileMode.buttons]]
-        # name = "Archive"
-        # url  = "/archives/"
+  [[params.profileMode.buttons]]
+  name = "Coding"
+  url  = "/coding/"
 
-        [[params.profileMode.buttons]]
-        name = "About"
-        url  = "/about/"
+  # [[params.profileMode.buttons]]
+  # name = "Archive"
+  # url  = "/archives/"
 
-        [[params.profileMode.buttons]]
-        name = "Photos"
-        url  = "/photos/"
+  [[params.profileMode.buttons]]
+  name = "About"
+  url  = "/about/"
 
-        #[[params.socialIcons]]
-        #name = "github"
-        #url  = "https://github.com/Br0u"
+  [[params.profileMode.buttons]]
+  name = "Photos"
+  url  = "/photos/"
+
+  [[params.profileMode.buttons]]
+  name = "Link"
+  url  = "/link/"
