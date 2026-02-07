@@ -1,0 +1,6 @@
+{{ $img := .Get "src" }}
+{{ if $img }}
+<figure class="about-hero">
+  <img src="{{ $img | absURL }}" alt="{{ .Get "alt" | default "About" }}" loading="lazy" decoding="async">
+</figure>
+{{ end }}

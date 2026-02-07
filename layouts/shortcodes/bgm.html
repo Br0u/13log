@@ -1,44 +1,27 @@
-{{- $src := .Get "src" -}} {{- $title := .Get "title" | default "背景音乐" -}}
+{{- $src := .Get "src" -}} {{- $title := .Get "title" | default "Background music" -}}
 {{- $artist := .Get "artist" | default "" -}}
 
-<div
-  class="bgm-player"
-  style="
-    margin: 20px 0;
-    padding: 15px;
-    background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  "
->
-  <div
-    style="
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-    "
-  >
-    <span style="font-size: 24px; margin-right: 10px">🎵</span>
+<div class="bgm-player">
+  <div class="bgm-player__header">
+    <span class="bgm-player__icon">Music</span>
     <div>
-      <h4 style="margin: 0; color: #333">{{ $title }}</h4>
+      <h4 class="bgm-player__title">{{ $title }}</h4>
       {{- if $artist -}}
-      <p style="margin: 5px 0 0 0; font-size: 14px; color: #666">
+      <p class="bgm-player__artist">
         {{ $artist }}
       </p>
       {{- end -}}
     </div>
   </div>
 
-  <audio controls style="width: 100%; max-width: 350px" preload="metadata">
+  <audio class="bgm-player__audio" controls preload="metadata">
     <source src="{{ $src }}" type="audio/mpeg" />
     <source src="{{ $src }}" type="audio/ogg" />
     <source src="{{ $src }}" type="audio/wav" />
-    您的浏览器不支持音频播放。
+    Your browser does not support audio playback.
   </audio>
 
-  <p style="margin: 10px 0 0 0; font-size: 12px; color: #888">
-    💡 点击播放按钮开始播放背景音乐
+  <p class="bgm-player__hint">
+    Click play to start background music.
   </p>
 </div>
