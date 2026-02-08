@@ -20,53 +20,48 @@
 
 {{- $pages := .Pages }}
 {{- $paginator := .Paginate $pages }}
+{{- $pageSet := $paginator.Pages }}
+{{- $contentPages := where $pageSet "Params.category" "content" }}
+{{- $techPages := where $pageSet "Params.category" "tech" }}
+{{- $podcastPages := where $pageSet "Params.category" "podcast" }}
+{{- $hasContent := gt (len $contentPages) 0 }}
+{{- $hasTech := gt (len $techPages) 0 }}
+{{- $hasPodcast := gt (len $podcastPages) 0 }}
 
+{{- if $hasTech }}
+<h2 class="link-section-title">技术博客</h2>
 <div class="posts-masonry">
-  {{- range $paginator.Pages }}
-  {{- $target := .Params.link | default .Permalink }}
-  {{- $previewEnabled := .Params.preview | default (site.Params.linkPreview | default true) }}
-  {{- $meta := dict }}
-  {{- if $previewEnabled }}
-    {{- $api := printf "https://api.ogfetch.com/preview?url=%s" (urlquery $target) }}
-    {{- $remote := try (resources.GetRemote $api) }}
-    {{- if and $remote (not $remote.Err) }}
-      {{- $meta = $remote.Value | transform.Unmarshal }}
-    {{- end }}
-  {{- end }}
-  {{- $title := $meta.title | default .Title }}
-  {{- $desc := $meta.description | default .Params.description | default (.Summary | plainify | htmlUnescape) }}
-  {{- $image := $meta.image }}
-  <div class="link-board-card">
-    <a class="link-board-card__main" href="{{ $target }}" target="_blank" rel="noopener">
-      {{- if $image }}
-      <div class="link-board-card__preview">
-        <img src="{{ $image }}" alt="" loading="lazy" decoding="async">
-      </div>
-      {{- end }}
-      <div class="link-board-card__title">{{ $title }}</div>
-      {{- if $desc }}
-      <div class="link-board-card__desc">{{ $desc }}</div>
-      {{- end }}
-      {{- if .Params.site }}
-      <div class="link-board-card__meta">{{ .Params.site }}</div>
-      {{- end }}
-    </a>
-
-    {{- with .Params.children }}
-    <div class="link-board-children">
-      {{- range . }}
-      <a class="link-board-child" href="{{ .link }}" target="_blank" rel="noopener">
-        <div class="link-board-child__title">{{ .title }}</div>
-        {{- if .description }}
-        <div class="link-board-child__desc">{{ .description }}</div>
-        {{- end }}
-      </a>
-      {{- end }}
-    </div>
-    {{- end }}
-  </div>
+  {{- range $techPages }}
+    {{- partial "link/card.html" . }}
   {{- end }}
 </div>
+{{- end }}
+
+{{- if and $hasContent $hasTech }}
+<div class="ink-divider" aria-hidden="true"></div>
+{{- end }}
+
+{{- if $hasContent }}
+<h2 class="link-section-title">内容博客</h2>
+<div class="posts-masonry">
+  {{- range $contentPages }}
+    {{- partial "link/card.html" . }}
+  {{- end }}
+</div>
+{{- end }}
+
+{{- if and $hasContent $hasPodcast }}
+<div class="ink-divider" aria-hidden="true"></div>
+{{- end }}
+
+{{- if $hasPodcast }}
+<h2 class="link-section-title">中文播客</h2>
+<div class="posts-masonry">
+  {{- range $podcastPages }}
+    {{- partial "link/card.html" . }}
+  {{- end }}
+</div>
+{{- end }}
 
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">
