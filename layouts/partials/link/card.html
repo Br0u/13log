@@ -1,0 +1,57 @@
+{{- $target := .Params.link | default .Permalink }}
+{{- $previewEnabled := .Params.preview | default (site.Params.linkPreview | default true) }}
+{{- $meta := dict }}
+{{- if $previewEnabled }}
+  {{- $api := printf "https://api.ogfetch.com/preview?url=%s" (urlquery $target) }}
+  {{- $remote := try (resources.GetRemote $api) }}
+  {{- if and $remote (not $remote.Err) }}
+    {{- $meta = $remote.Value | transform.Unmarshal }}
+  {{- end }}
+{{- end }}
+{{- $title := .Title | default $meta.title }}
+{{- $desc := .Params.description | default $meta.description | default (.Summary | plainify | htmlUnescape) }}
+{{- $image := "" }}
+{{- with .Params.image }}
+  {{- if strings.HasPrefix . "http" }}
+    {{- $image = . }}
+  {{- else }}
+    {{- $res := resources.Get . }}
+    {{- if $res }}
+      {{- $image = $res.RelPermalink }}
+    {{- else }}
+      {{- $image = . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- if and (not $image) $meta.image }}
+  {{- $image = $meta.image }}
+{{- end }}
+<div class="link-board-card">
+  <a class="link-board-card__main" href="{{ $target }}" target="_blank" rel="noopener">
+    {{- if $image }}
+    <div class="link-board-card__preview">
+      <img src="{{ $image }}" alt="" loading="lazy" decoding="async">
+    </div>
+    {{- end }}
+    <div class="link-board-card__title">{{ $title }}</div>
+    {{- if $desc }}
+    <div class="link-board-card__desc">{{ $desc }}</div>
+    {{- end }}
+    {{- if .Params.site }}
+    <div class="link-board-card__meta">{{ .Params.site }}</div>
+    {{- end }}
+  </a>
+
+  {{- with .Params.children }}
+  <div class="link-board-children">
+    {{- range . }}
+    <a class="link-board-child" href="{{ .link }}" target="_blank" rel="noopener">
+      <div class="link-board-child__title">{{ .title }}</div>
+      {{- if .description }}
+      <div class="link-board-child__desc">{{ .description }}</div>
+      {{- end }}
+    </a>
+    {{- end }}
+  </div>
+  {{- end }}
+</div>
