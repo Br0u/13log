@@ -109,7 +109,7 @@
       {{- i18n "next_page" }}&nbsp;
       {{- if (.Param "ShowPageNums") }}
       {{- add 1 $paginator.PageNumber }}/{{ $paginator.TotalPages }}
-      {{- end }}&nbsp;»
+      {{- end }}&nbsp;<span class="symbol-arrow" aria-hidden="true">»</span>
     </a>
     {{- end }}
   </nav>

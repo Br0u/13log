@@ -10,7 +10,7 @@
   {{- end }}
   {{- with $pages.Prev . }}
   <a class="next" href="{{ .Permalink }}">
-    <span class="title">{{ i18n "next_page" }} »</span>
+    <span class="title">{{ i18n "next_page" }} <span class="symbol-arrow" aria-hidden="true">»</span></span>
     <br>
     <span>{{- .Name -}}</span>
   </a>
