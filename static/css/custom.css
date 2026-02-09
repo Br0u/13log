@@ -222,6 +222,7 @@ body,
 
 /* === Ink Theme (Consolidated) === */
 :root {
+  --symbol-font: "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols 2", "Noto Sans Symbols", "Symbola", sans-serif;
   --theme: #e7d8b3;
   --entry: #f0e1be;
   --primary: #3a2f20;
@@ -668,6 +669,38 @@ body::before {
 .post-single .toc {
   border: 1px solid var(--border);
   background: var(--soft-bg-2);
+}
+
+/* Symbol glyphs (avoid emoji fallback on iOS) */
+.profile-links__arrow {
+  font-family: var(--symbol-font);
+  font-variant-emoji: text;
+}
+
+.symbol-arrow {
+  font-family: var(--symbol-font);
+  font-variant-emoji: text;
+}
+
+.toc details summary {
+  list-style: none;
+}
+
+.toc details summary::-webkit-details-marker {
+  display: none;
+}
+
+.toc details summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-inline-end: 0.35rem;
+  font-family: var(--symbol-font);
+  font-variant-emoji: text;
+  transform: translateY(-0.02em);
+}
+
+.toc details[open] summary::before {
+  content: "▾";
 }
 
 @media (max-width: 720px) {
