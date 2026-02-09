@@ -723,54 +723,6 @@ body::before {
   .about-hero { margin: 1rem 0 1.5rem; }
 }
 
-/* About blog snippet */
-.about-blog h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1.4rem;
-  font-weight: 700;
-}
-
-.about-blog__quote {
-  margin: 0 0 1rem;
-  padding: 0.6rem 0.9rem;
-  border-left: 4px solid var(--primary);
-  background: var(--blockquote-bg);
-}
-
-.about-blog__quote p {
-  margin: 0;
-}
-
-.about-blog__quote ul {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-
-.about-blog__quote li {
-  margin: 0.2rem 0;
-}
-
-.about-blog__quote strong {
-  font-weight: 600;
-}
-
-.about-blog__author {
-  color: var(--primary);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--border);
-}
-
-.about-blog__author:hover {
-  border-bottom-color: var(--primary);
-}
-
-.about-blog__wave {
-  text-decoration-line: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: var(--primary);
-  text-underline-offset: 4px;
-}
-
 /* Posts masonry-like 3-column layout */
 .main .post-entry,
 .main .first-entry {
