@@ -27,6 +27,25 @@
     {{ .Description | markdownify }}
   </div>
   {{- end }}
+  {{- if eq .Type "posts" }}
+  {{- $allTags := slice }}
+  {{- range .RegularPages }}
+    {{- with .Params.tags }}
+      {{- range . }}
+        {{- $allTags = $allTags | append . }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- $allTags = $allTags | uniq | sort }}
+  {{- if gt (len $allTags) 0 }}
+  <div class="posts-filter" data-posts-filter>
+    <button type="button" class="posts-filter__chip is-active" data-filter="__all">全部</button>
+    {{- range $allTags }}
+    <button type="button" class="posts-filter__chip" data-filter="{{ . }}">{{ . }}</button>
+    {{- end }}
+  </div>
+  {{- end }}
+  {{- end }}
 </header>
 {{- end }}
 
@@ -64,7 +83,8 @@
 {{- $class = "post-entry tag-entry" }}
 {{- end }}
 
-<article class="{{ $class }}">
+{{- $postTags := .Params.tags | default (slice) -}}
+<article class="{{ $class }}" data-post-tags="{{ delimit $postTags "|" }}">
   {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
   <header class="entry-header">
@@ -95,6 +115,37 @@
 {{- end }}
 </div>
 
+{{- if eq .Type "posts" }}
+<script>
+  (function () {
+    const filterRoot = document.querySelector("[data-posts-filter]");
+    if (!filterRoot) return;
+
+    const chips = Array.from(filterRoot.querySelectorAll(".posts-filter__chip"));
+    const cards = Array.from(document.querySelectorAll(".posts-masonry article[data-post-tags]"));
+
+    const applyFilter = function (tag) {
+      cards.forEach(function (card) {
+        const raw = card.getAttribute("data-post-tags") || "";
+        const tags = raw ? raw.split("|").filter(Boolean) : [];
+        const matched = tag === "__all" || tags.includes(tag);
+        card.classList.toggle("is-filter-hidden", !matched);
+      });
+
+      chips.forEach(function (chip) {
+        chip.classList.toggle("is-active", chip.dataset.filter === tag);
+      });
+    };
+
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        applyFilter(chip.dataset.filter || "__all");
+      });
+    });
+  })();
+</script>
+{{- end }}
+
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">
   <nav class="pagination">
@@ -121,3 +172,4 @@
 {{- end }}{{/* end profileMode */}}
 
 {{- end }}{{- /* end main */ -}}
+

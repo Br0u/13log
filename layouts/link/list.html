@@ -80,4 +80,12 @@
 </footer>
 {{- end }}
 
+{{- $linkPreviewScript := resources.Get "js/link-preview.js" | resources.Minify }}
+{{- if not site.Params.assets.disableFingerprinting }}
+{{- $linkPreviewScript = $linkPreviewScript | fingerprint }}
+<script defer crossorigin="anonymous" src="{{ $linkPreviewScript.RelPermalink }}" integrity="{{ $linkPreviewScript.Data.Integrity }}"></script>
+{{- else }}
+<script defer src="{{ $linkPreviewScript.RelPermalink }}"></script>
+{{- end }}
+
 {{- end }}
