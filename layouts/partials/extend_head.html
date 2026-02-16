@@ -1,11 +1,4 @@
-﻿{{- /* Override browser tab title without changing site.Title */ -}}
-{{- $browserTitle := site.Params.browserTitle | default site.Title -}}
-{{- if .IsHome -}}
-<title>{{ $browserTitle }}</title>
-{{- else -}}
-<title>{{ if .Title }}{{ .Title }} | {{ end }}{{ $browserTitle }}</title>
-{{- end -}}
-<style>
+﻿<style>
   body,
   .main,
   .post-content,
@@ -38,3 +31,4 @@
   }
 </style>
 <link rel="stylesheet" href="/css/custom.css">
+

@@ -17,6 +17,20 @@ aliases:
   .post-content {
     font-family: "SimSun", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
   }
+  .post-single {
+    background:
+      linear-gradient(180deg, rgba(240, 225, 190, 0.68), rgba(240, 225, 190, 0.62));
+    backdrop-filter: blur(1.8px);
+  }
+  .post-single .post-content {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  .dark .post-single {
+    background:
+      linear-gradient(180deg, rgba(36, 33, 28, 0.66), rgba(36, 33, 28, 0.58));
+  }
   .about-hero-caption {
     display: block;
     margin: 0.6rem 0 1.4rem;

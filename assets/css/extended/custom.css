@@ -241,6 +241,7 @@ body,
   --soft-bg-1: rgba(88, 68, 40, 0.08);
   --soft-bg-2: rgba(88, 68, 40, 0.05);
   --blockquote-bg: rgba(88, 68, 40, 0.08);
+  --bg-photo-tint: rgba(231, 216, 179, 0.72);
 }
 
 .dark {
@@ -262,17 +263,31 @@ body,
   --soft-bg-1: rgba(238, 230, 216, 0.06);
   --soft-bg-2: rgba(238, 230, 216, 0.04);
   --blockquote-bg: rgba(238, 230, 216, 0.06);
+  --bg-photo-tint: rgba(18, 16, 14, 0.72);
 }
 
 body {
   background:
+    linear-gradient(var(--bg-photo-tint), var(--bg-photo-tint)),
     radial-gradient(1200px 600px at 8% 12%, var(--bg-spot-1), transparent 62%),
     radial-gradient(900px 520px at 92% 18%, var(--bg-spot-2), transparent 58%),
     radial-gradient(700px 420px at 25% 82%, var(--bg-spot-3), transparent 62%),
     radial-gradient(320px 220px at 70% 75%, var(--bg-spot-4), transparent 65%),
+    url("/images/backgrounds/bj-bg.jpg") center / cover no-repeat,
     var(--theme);
   scroll-behavior: smooth;
   overscroll-behavior: none;
+}
+
+body.list {
+  background:
+    linear-gradient(var(--bg-photo-tint), var(--bg-photo-tint)),
+    radial-gradient(1200px 600px at 8% 12%, var(--bg-spot-1), transparent 62%),
+    radial-gradient(900px 520px at 92% 18%, var(--bg-spot-2), transparent 58%),
+    radial-gradient(700px 420px at 25% 82%, var(--bg-spot-3), transparent 62%),
+    radial-gradient(320px 220px at 70% 75%, var(--bg-spot-4), transparent 65%),
+    url("/images/backgrounds/bj-bg.jpg") center / cover no-repeat,
+    var(--theme);
 }
 
 html {
@@ -329,10 +344,23 @@ body::before {
 
 .dark body {
   background:
+    linear-gradient(var(--bg-photo-tint), var(--bg-photo-tint)),
     radial-gradient(1200px 600px at 8% 12%, var(--bg-spot-1), transparent 62%),
     radial-gradient(900px 520px at 92% 18%, var(--bg-spot-2), transparent 58%),
     radial-gradient(700px 420px at 25% 82%, var(--bg-spot-3), transparent 62%),
     radial-gradient(320px 220px at 70% 75%, var(--bg-spot-4), transparent 65%),
+    url("/images/backgrounds/bj-bg.jpg") center / cover no-repeat,
+    var(--theme);
+}
+
+.dark body.list {
+  background:
+    linear-gradient(var(--bg-photo-tint), var(--bg-photo-tint)),
+    radial-gradient(1200px 600px at 8% 12%, var(--bg-spot-1), transparent 62%),
+    radial-gradient(900px 520px at 92% 18%, var(--bg-spot-2), transparent 58%),
+    radial-gradient(700px 420px at 25% 82%, var(--bg-spot-3), transparent 62%),
+    radial-gradient(320px 220px at 70% 75%, var(--bg-spot-4), transparent 65%),
+    url("/images/backgrounds/bj-bg.jpg") center / cover no-repeat,
     var(--theme);
 }
 
