@@ -153,7 +153,7 @@ aliases:
   <h3>居住地</h3>
   <div id="about-map" class="about-map__canvas" aria-label="Map" role="region">
     <canvas id="about-weather" class="about-map__overlay"></canvas>
-    <div class="about-map__label"><span>Guelph, Ontario</span></div>
+    <div class="about-map__label"><span>Toronto, Ontario</span></div>
   </div>
 </section>
 
@@ -164,7 +164,7 @@ aliases:
     const container = document.getElementById("about-map");
     if (!container) return;
 
-    const center = [-80.249, 43.5448];
+    const center = [-79.3832, 43.6532];
     const map = new maplibregl.Map({
       container,
       style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
@@ -203,7 +203,7 @@ aliases:
     const rainCodes = new Set([51, 53, 55, 61, 63, 65, 66, 67, 80, 81, 82, 95, 96, 99]);
     const snowCodes = new Set([71, 73, 75, 77, 85, 86]);
     let mode = "clear";
-    fetch("https://api.open-meteo.com/v1/forecast?latitude=43.5448&longitude=-80.249&current_weather=true&timezone=auto")
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=43.6532&longitude=-79.3832&current_weather=true&timezone=auto")
       .then((res) => res.json())
       .then((data) => {
         const code = data && data.current_weather ? data.current_weather.weathercode : null;

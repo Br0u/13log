@@ -1,15 +1,7 @@
 {{- $target := .Params.link | default .Permalink }}
-{{- $previewEnabled := .Params.preview | default (site.Params.linkPreview | default true) }}
-{{- $meta := dict }}
-{{- if $previewEnabled }}
-  {{- $api := printf "https://api.ogfetch.com/preview?url=%s" (urlquery $target) }}
-  {{- $remote := try (resources.GetRemote $api) }}
-  {{- if and $remote (not $remote.Err) }}
-    {{- $meta = $remote.Value | transform.Unmarshal }}
-  {{- end }}
-{{- end }}
-{{- $title := .Title | default $meta.title }}
-{{- $desc := .Params.description | default $meta.description | default (.Summary | plainify | htmlUnescape) }}
+{{- $previewEnabled := site.Params.linkPreview | default true }}
+{{- $title := .Title }}
+{{- $desc := .Params.description | default (.Summary | plainify | htmlUnescape) }}
 {{- $image := "" }}
 {{- with .Params.image }}
   {{- if strings.HasPrefix . "http" }}
@@ -23,20 +15,21 @@
     {{- end }}
   {{- end }}
 {{- end }}
-{{- if and (not $image) $meta.image }}
-  {{- $image = $meta.image }}
-{{- end }}
-<div class="link-board-card">
+{{- $needsAsyncPreview := and $previewEnabled (or (not $image) (not $desc)) }}
+<div
+  class="link-board-card{{ if $needsAsyncPreview }} link-board-card--preview-pending{{ end }}"
+  data-link-card
+  data-preview-enabled="{{ if $previewEnabled }}true{{ else }}false{{ end }}"
+  data-preview-url="{{ $target }}"
+>
   <a class="link-board-card__main" href="{{ $target }}" target="_blank" rel="noopener">
-    {{- if $image }}
-    <div class="link-board-card__preview">
-      <img src="{{ $image }}" alt="" loading="lazy" decoding="async">
+    <div class="link-board-card__preview{{ if not $image }} is-empty{{ end }}" data-preview-container>
+      {{- if $image }}
+      <img src="{{ $image }}" alt="" loading="lazy" decoding="async" data-preview-image>
+      {{- end }}
     </div>
-    {{- end }}
-    <div class="link-board-card__title">{{ $title }}</div>
-    {{- if $desc }}
-    <div class="link-board-card__desc">{{ $desc }}</div>
-    {{- end }}
+    <div class="link-board-card__title" data-preview-title>{{ $title }}</div>
+    <div class="link-board-card__desc{{ if not $desc }} is-empty{{ end }}" data-preview-desc>{{ $desc }}</div>
     {{- if .Params.site }}
     <div class="link-board-card__meta">{{ .Params.site }}</div>
     {{- end }}

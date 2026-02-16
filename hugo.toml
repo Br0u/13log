@@ -15,6 +15,7 @@ enableEmoji = true
 
 [params]
   browserTitle = "我的小小世界"
+  linkPreview = true
   defaultTheme = "auto"
   ShowReadingTime = true
   ShowToc = true
