@@ -702,7 +702,6 @@ body::before {
 }
 
 .post-single .post-content p { text-indent: 2em; margin-top: 0.4rem; margin-bottom: 1rem; }
-.post-single .post-content p:first-of-type { text-indent: 0; }
 
 .post-single .post-content h1,
 .post-single .post-content h2,
@@ -1106,4 +1105,59 @@ body::before {
 .post-single .post-content p {
   margin-top: 0.6rem;
   margin-bottom: 1.4rem;
+}
+
+/* Spoiler text */
+.spoiler {
+  display: inline-block;
+  position: relative;
+  border-radius: 0.28em;
+  padding: 0 0.28em;
+  margin: 0 0.04em;
+  font-size: 1.08rem !important;
+  line-height: 1.55;
+  background:
+    radial-gradient(160% 120% at 20% 40%, rgba(58, 47, 32, 0.10), transparent 62%),
+    radial-gradient(130% 100% at 80% 55%, rgba(58, 47, 32, 0.07), transparent 65%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(58, 47, 32, 0.07));
+  color: transparent;
+  text-shadow: 0 0 8px rgba(58, 47, 32, 0.12);
+  user-select: none;
+  overflow: hidden;
+  transition: color 0.24s ease, background 0.26s ease, box-shadow 0.24s ease, transform 0.24s ease, text-shadow 0.24s ease;
+}
+
+.spoiler::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.54;
+  background:
+    radial-gradient(120% 100% at 15% 45%, rgba(255, 255, 255, 0.28), transparent 58%),
+    radial-gradient(110% 90% at 80% 50%, rgba(255, 255, 255, 0.18), transparent 62%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 5px);
+  filter: blur(1px);
+  mix-blend-mode: soft-light;
+  transition: opacity 0.24s ease;
+}
+
+.spoiler:hover,
+.spoiler:focus-visible {
+  color: var(--content);
+  background:
+    radial-gradient(160% 120% at 20% 40%, rgba(58, 47, 32, 0.04), transparent 62%),
+    radial-gradient(130% 100% at 80% 55%, rgba(58, 47, 32, 0.03), transparent 65%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07), rgba(58, 47, 32, 0.03));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--border) 24%, transparent),
+    0 2px 6px rgba(58, 47, 32, 0.05);
+  transform: translateY(-0.02em);
+  text-shadow: none;
+  user-select: text;
+}
+
+.spoiler:hover::before,
+.spoiler:focus-visible::before {
+  opacity: 0.16;
 }
