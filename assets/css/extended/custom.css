@@ -1,4 +1,4 @@
-﻿/* Custom styles (consolidated) */
+/* Custom styles (consolidated) */
 
 /* Global typography */
 body,
@@ -9,10 +9,10 @@ body,
 .post-entry,
 .post-entry .entry-content,
 .first-entry .entry-content {
-  font-family: "SimSun", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif !important;
+  font-family: "Ma Shan Zheng", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", cursive !important;
 }
 .post-content * {
-  font-family: "SimSun", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif !important;
+  font-family: "Ma Shan Zheng", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", cursive !important;
 }
 
 
@@ -666,7 +666,7 @@ body::before {
 }
 
 .post-single .post-title {
-  font-family: "STSong", "Songti SC", "SimSun", "Noto Serif SC", serif;
+  font-family: "Ma Shan Zheng", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", cursive;
   font-size: 2.1rem;
   letter-spacing: 0.02em;
   color: var(--primary);
@@ -681,12 +681,12 @@ body::before {
 .post-single .post-content li,
 .post-single .post-content blockquote,
 .post-single .post-content table {
-  font-family: "STSong", "Songti SC", "SimSun", "Noto Serif SC", serif;
+  font-family: "Ma Shan Zheng", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", cursive;
   color: var(--content);
 }
 
 .post-single .post-content {
-  font-size: 1.06rem;
+  font-size: 1.4rem;
   line-height: 1.95;
   padding: 0.4rem 0.2rem;
   background: transparent;
@@ -744,7 +744,7 @@ body::before {
 }
 
 .toc details summary::before {
-  content: "▸";
+  content: "?";
   display: inline-block;
   margin-inline-end: 0.35rem;
   font-family: var(--symbol-font);
@@ -753,7 +753,7 @@ body::before {
 }
 
 .toc details[open] summary::before {
-  content: "▾";
+  content: "?";
 }
 
 @media (max-width: 720px) {
