@@ -1,2 +1,4 @@
 {{- $shortcodes := resources.Get "js/shortcodes.js" | minify | fingerprint -}}
 <script defer src="{{ $shortcodes.RelPermalink }}" integrity="{{ $shortcodes.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- $pageToc := resources.Get "js/page-toc-rail.js" | minify | fingerprint -}}
+<script defer src="{{ $pageToc.RelPermalink }}" integrity="{{ $pageToc.Data.Integrity }}" crossorigin="anonymous"></script>
