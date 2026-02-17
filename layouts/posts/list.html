@@ -29,10 +29,13 @@
   {{- end }}
   {{- if eq .Type "posts" }}
   {{- $allTags := slice }}
+  {{- $tagCounts := dict }}
   {{- range .RegularPages }}
     {{- with .Params.tags }}
       {{- range . }}
         {{- $allTags = $allTags | append . }}
+        {{- $current := index $tagCounts . | default 0 }}
+        {{- $tagCounts = merge $tagCounts (dict . (add $current 1)) }}
       {{- end }}
     {{- end }}
   {{- end }}
@@ -41,7 +44,12 @@
   <div class="posts-filter" data-posts-filter>
     <button type="button" class="posts-filter__chip is-active" data-filter="__all">全部</button>
     {{- range $allTags }}
-    <button type="button" class="posts-filter__chip" data-filter="{{ . }}">{{ . }}</button>
+    {{- $count := index $tagCounts . | default 0 }}
+    {{- $countText := printf "%d" $count }}
+    {{- if gt $count 99 }}
+      {{- $countText = "99+" }}
+    {{- end }}
+    <button type="button" class="posts-filter__chip" data-filter="{{ . }}">{{ . }}<span class="posts-filter__count" aria-hidden="true">{{ $countText }}</span></button>
     {{- end }}
   </div>
   {{- end }}
