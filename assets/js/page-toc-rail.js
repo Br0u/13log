@@ -33,7 +33,12 @@
     var container = document.querySelector("main .post-content");
     if (!container) return [];
     var nodes = container.querySelectorAll("h2, h3");
-    return Array.prototype.filter.call(nodes, function (node) {
+    var filtered = Array.prototype.filter.call(nodes, function (node) {
+      return !node.closest(".toc");
+    });
+    if (filtered.length) return filtered;
+    var fallback = container.querySelectorAll("h1");
+    return Array.prototype.filter.call(fallback, function (node) {
       return !node.closest(".toc");
     });
   }
