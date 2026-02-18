@@ -1066,40 +1066,109 @@ body::before {
 }
 
 .posts-filter {
+  --filter-paper-top: #f2e7ca;
+  --filter-paper-bottom: #e5d6b2;
+  --filter-ink: #2f261a;
+  --filter-edge: #6a5a43;
+  --filter-seal-top: #eee3c8;
+  --filter-seal-bottom: #dccaa3;
+  --filter-seal-edge: #6a5941;
+  --filter-gloss: rgba(255, 255, 255, 0.16);
   margin-top: 0.9rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
 }
 
+.dark .posts-filter {
+  --filter-paper-top: #3a3227;
+  --filter-paper-bottom: #2e271d;
+  --filter-ink: #e6ddce;
+  --filter-edge: #8f7e67;
+  --filter-seal-top: #4a4031;
+  --filter-seal-bottom: #372f24;
+  --filter-seal-edge: #9a8970;
+  --filter-gloss: rgba(255, 255, 255, 0.06);
+}
+
 .posts-filter__chip {
-  border: 1px solid var(--border);
-  background: var(--entry);
-  color: var(--secondary);
-  padding: 0.28rem 0.68rem;
-  border-radius: 0.58rem;
+  position: relative;
+  border: 1px solid var(--filter-edge);
+  background:
+    radial-gradient(120% 110% at 20% 15%, var(--filter-gloss), transparent 65%),
+    repeating-linear-gradient(-16deg, rgba(58, 47, 32, 0.035) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, var(--filter-paper-top), var(--filter-paper-bottom));
+  color: var(--filter-ink);
+  padding: 0.28rem 1.2rem 0.28rem 0.68rem;
+  border-radius: 0.52rem;
   font-size: 0.84rem;
   line-height: 1.25;
   cursor: pointer;
-  transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 1px 3px rgba(30, 24, 17, 0.1);
+  transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.posts-filter__count {
+  position: absolute;
+  top: -0.44rem;
+  right: -0.34rem;
+  min-width: 1.08rem;
+  height: 1.08rem;
+  padding: 0 0.22rem;
+  border-radius: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 600;
+  line-height: 1;
+  color: color-mix(in srgb, var(--filter-ink) 92%, #19140d);
+  letter-spacing: 0.01em;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.24), transparent 46%),
+    repeating-radial-gradient(circle at 48% 54%, rgba(255, 251, 240, 0.07) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
+    linear-gradient(170deg, var(--filter-seal-top), var(--filter-seal-bottom));
+  border: 1px solid var(--filter-seal-edge);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 250, 239, 0.24),
+    inset 0 -1px 0 rgba(57, 46, 32, 0.22),
+    0 2px 6px rgba(38, 29, 21, 0.2);
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+.posts-filter__chip.is-active .posts-filter__count {
+  transform: rotate(-5deg) scale(1.03);
 }
 
 .posts-filter__chip:hover {
-  transform: translateY(-1px);
-  border-color: var(--primary);
-  color: var(--primary);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px) rotate(-0.1deg);
+  border-color: color-mix(in srgb, var(--filter-edge) 82%, #2b2217);
+  color: color-mix(in srgb, var(--filter-ink) 92%, #13100b);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
 .posts-filter__chip.is-active {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.07));
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  border-color: color-mix(in srgb, var(--filter-edge) 88%, #17120c);
+  color: color-mix(in srgb, var(--filter-ink) 96%, #0f0c08);
+  background:
+    radial-gradient(120% 110% at 20% 12%, color-mix(in srgb, var(--filter-gloss) 88%, transparent), transparent 62%),
+    repeating-linear-gradient(-14deg, rgba(38, 30, 20, 0.06) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, color-mix(in srgb, var(--filter-paper-top) 84%, #d5c199), color-mix(in srgb, var(--filter-paper-bottom) 88%, #c8b086));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--filter-gloss) 80%, transparent),
+    0 6px 14px rgba(0, 0, 0, 0.11);
 }
 
 .dark .posts-filter__chip.is-active {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.1));
+  background:
+    radial-gradient(120% 110% at 20% 12%, color-mix(in srgb, var(--filter-gloss) 90%, transparent), transparent 62%),
+    repeating-linear-gradient(-14deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, color-mix(in srgb, var(--filter-paper-top) 90%, #32281e), color-mix(in srgb, var(--filter-paper-bottom) 90%, #251d15));
 }
 
 .post-single .post-content p {
@@ -1124,6 +1193,9 @@ body::before {
   text-shadow: 0 0 8px rgba(58, 47, 32, 0.12);
   user-select: none;
   overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: color 0.24s ease, background 0.26s ease, box-shadow 0.24s ease, transform 0.24s ease, text-shadow 0.24s ease;
 }
 
@@ -1143,7 +1215,8 @@ body::before {
 }
 
 .spoiler:hover,
-.spoiler:focus-visible {
+.spoiler:focus-visible,
+.spoiler.is-revealed {
   color: var(--content);
   background:
     radial-gradient(160% 120% at 20% 40%, rgba(58, 47, 32, 0.04), transparent 62%),
@@ -1158,6 +1231,126 @@ body::before {
 }
 
 .spoiler:hover::before,
-.spoiler:focus-visible::before {
+.spoiler:focus-visible::before,
+.spoiler.is-revealed::before {
   opacity: 0.16;
+}
+
+/* Weekly bookmark quote block */
+.post-single .post-content .weekly-bookmark {
+  position: relative;
+  display: block;
+  margin: 1rem 0 1.4rem;
+  padding: 1rem 1.05rem 0.9rem 1.55rem;
+  border-left: none;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, #5a4a35 18%);
+  border-radius: 0 0.85rem 0.9rem 0;
+  background:
+    radial-gradient(120% 95% at 12% 10%, rgba(255, 255, 255, 0.35), transparent 58%),
+    radial-gradient(110% 90% at 85% 90%, rgba(70, 58, 43, 0.08), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(84, 66, 42, 0.028) 0 1px, transparent 1px 5px),
+    linear-gradient(180deg, rgba(245, 239, 223, 0.62), rgba(238, 227, 200, 0.66)),
+    url("/pics/bookmark/bq-paper.jpg");
+  background-size: auto, auto, auto, auto, 114% auto;
+  background-position: center, center, center, center, center 36%;
+  background-repeat: no-repeat;
+  background-blend-mode: screen, multiply, normal, normal, soft-light;
+  box-shadow:
+    0 4px 14px rgba(34, 27, 18, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 0 0 1px rgba(86, 68, 44, 0.08);
+  overflow: hidden;
+}
+
+.post-single .post-content .weekly-bookmark::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0.4rem;
+  height: 100%;
+  background:
+    linear-gradient(180deg, rgba(58, 47, 34, 0.5), rgba(96, 77, 53, 0.42)),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 4px);
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.post-single .post-content .weekly-bookmark::after {
+  content: none;
+  position: absolute;
+  right: 0.9rem;
+  top: 0;
+  width: 1.9rem;
+  height: 1.55rem;
+  background:
+    radial-gradient(120% 90% at 60% 0%, rgba(255, 255, 255, 0.22), transparent 52%),
+    linear-gradient(180deg, rgba(138, 60, 53, 0.62), rgba(113, 44, 40, 0.68));
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  opacity: 0.72;
+  filter: saturate(0.75);
+}
+
+.post-single .post-content .weekly-bookmark p {
+  margin: 0;
+  text-indent: 0;
+  line-height: 1.9;
+  color: color-mix(in srgb, var(--content) 89%, #2a2016);
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.post-single .post-content .weekly-bookmark__source {
+  display: block;
+  margin-top: 0.68rem;
+  text-align: right;
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--secondary) 94%, #5a4a39);
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+.post-single .post-content .weekly-bookmark__source::before {
+  content: none;
+}
+
+.dark .post-single .post-content .weekly-bookmark {
+  border-color: color-mix(in srgb, var(--border) 84%, #3a2e1f 16%);
+  background:
+    radial-gradient(120% 95% at 12% 10%, rgba(255, 255, 255, 0.07), transparent 58%),
+    radial-gradient(110% 90% at 85% 90%, rgba(10, 8, 6, 0.22), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 5px),
+    linear-gradient(180deg, rgba(47, 39, 31, 0.6), rgba(36, 29, 23, 0.64)),
+    url("/pics/bookmark/bq-paper.jpg");
+  background-size: auto, auto, auto, auto, 114% auto;
+  background-position: center, center, center, center, center 36%;
+  background-repeat: no-repeat;
+  background-blend-mode: screen, multiply, normal, normal, soft-light;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.dark .post-single .post-content .weekly-bookmark::before {
+  background:
+    linear-gradient(180deg, rgba(164, 140, 97, 0.58), rgba(108, 87, 56, 0.52)),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 4px);
+}
+
+.dark .post-single .post-content .weekly-bookmark::after {
+  content: none;
+}
+
+.dark .post-single .post-content .weekly-bookmark p {
+  color: color-mix(in srgb, var(--content) 92%, #d8c8ac);
+}
+
+@media (max-width: 560px) {
+  .post-single .post-content .weekly-bookmark {
+    padding-right: 0.9rem;
+  }
+
+  .post-single .post-content .weekly-bookmark::after {
+    width: 1.9rem;
+    height: 1.55rem;
+    right: 0.62rem;
+  }
 }
